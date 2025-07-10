@@ -257,9 +257,6 @@ ul.pagination{
         display: flex;
         align-items: center;
         justify-content: center;
-        .breakpoint-large-down({
-            height: 140px;
-        });
     }
 
     h1 {
@@ -278,7 +275,6 @@ ul.pagination{
                 padding-top: 0px;
                 width: 100%;
                 text-align: center;
-                margin-top: 55px;
             });
         }
     }
@@ -338,7 +334,7 @@ ul.pagination{
 
         .about_info{
             position: absolute;
-            bottom: 100px;
+            bottom: 109px;
             left: 0;
             width: -webkit-fill-available;
             padding: 0;
@@ -396,7 +392,7 @@ ul.pagination{
 
                 .about_btn{
                     font-family: Manrope;
-                    padding: 17px 14px;
+                    padding: 17px 28px;
                     border-radius: 40px;
                     border: 0.747px solid rgba(255, 255, 255, 0.29);
                     background: rgba(255, 255, 255, 0.04);
@@ -409,7 +405,7 @@ ul.pagination{
                     line-height: normal;
                     height: fit-content;
                     white-space: nowrap;
-                    margin:  0 14px;
+                    margin:  0 7px;
 
                     .breakpoint-large-down({
                         padding: 6px 6px;
@@ -440,6 +436,37 @@ ul.pagination{
 .header-image-bar{
     .jumbotron{
         width: -webkit-fill-available;
+    }
+}
+
+.header-image:not(.home){
+    .header-image-bar{
+        align-items: end;
+        padding-bottom: 80px;
+        height: 276px;
+
+        .breakpoint-large-down({
+            height: 140px;
+            padding-bottom: 40px;
+        });
+        .jumbotron{
+            padding: 0 63px !important;
+        }
+    }
+}
+.header-image.coming-soon{
+    .header-image-bar{
+        align-items: center;
+        padding-bottom: 0;
+        height: 100vh;
+
+        .breakpoint-large-down({
+            height: unset;
+            padding-bottom: unset;
+        });
+        .jumbotron{
+            padding: 0 63px !important;
+        }
     }
 }
 
@@ -645,28 +672,25 @@ ul.pagination{
     .subscriber{
         display: flex;
         flex-direction: column;
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 84;
-        line-height: 120%; /* 28.8px */
-        letter-spacing: -0.96px;
         a{
             margin-top: 20px;
             width: 128px;
-            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #FFF;
             text-align: center;
-            font-size: 15px;
             font-style: normal;
-            font-weight: 84;
             line-height: normal;
-            letter-spacing: -0.45px;
             border-radius: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: -0.48px;
+            padding-top: 14px;
+            padding-bottom: 14px;
+            border: none;
             background: @link-color;
-            backdrop-filter: blur(13.050000190734863px);
+            backdrop-filter: blur(13.05000019px);
 
             .breakpoint-large-down({
                 margin: 25px auto;

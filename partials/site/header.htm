@@ -73,11 +73,11 @@ numberOfLevels = 2
             </div>
             <div class="container about_info">
                 <div class="row between-md around-xs">
-                    <div class="col-md-4 col-xs-12 start-md around-xs info_and_btn">
+                    <div class="col-md-4 col-xs-12 start-md around-xs info_and_btn" data-aos="fade-up">
                         DeCrises: Empowering decision-makers with integrated crisis management tools.
                         <a href="/about" class="learn_more">Learn more</a>
                     </div>
-                    <div class="col-md-8 col-xs-12 end-md around-xs btns">
+                    <div class="col-md-8 col-xs-12 end-md around-xs btns" data-aos="fade-up">
                         <div class="about_btn">Green future</div>
                         <div class="about_btn">Multilevel governance</div>
                         <div class="about_btn">Тwin transition</div>
@@ -86,27 +86,18 @@ numberOfLevels = 2
             </div>
         </div>
     </div>
-    {% else %}
-    {%if this.page.header_image %}
-    <div class="header-image-bar hero" style="background: url('{{this.page.header_image|media}}') left center no-repeat; background-size: cover;">
-        <div class="container jumbotron">
-            {% if page_id != 'home' and page_id != 'search' %}
-            <h1 class="underline white">
-                {%if page_title%} {{page_title}} {%else%} {{site_name}} {%endif%}</h1>
-            {%endif%}
+        {% else %}
+
+        <div class="header-image-bar" style="background-image: url('{{this.theme.header_image.getPath()}}'); background-position: left center;">
+            <div class="jumbotron hero">
+                {% if page_id != 'home' and page_id != 'search' and page_id != 'open-call-projects' %}
+                <h1 class="underline white">
+                    {%if page_title%} {{page_title}} {%else%} {{site_name}} {%endif%}</h1>
+                {%endif%}
+            </div>
         </div>
-    </div>
-    {%else%}
-    <div class="header-image-bar" style="background-image: url('{{this.theme.header_image.getPath()}}'); background-position: left center;">
-        <div class="container jumbotron hero">
-            {% if page_id != 'home' and page_id != 'search' and page_id != 'open-call-projects' %}
-            <h1 class="underline white">
-                {%if page_title%} {{page_title}} {%else%} {{site_name}} {%endif%}</h1>
-            {%endif%}
-        </div>
-    </div>
-    {%endif%}
-    {%endif%}
+
+        {%endif%}
     {%endif%}
 
 </div>

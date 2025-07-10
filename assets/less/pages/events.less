@@ -362,6 +362,10 @@
     h1{
         color: @dark-color;
     }
+
+    .row + .row {
+        margin-top: 0;
+    }
     .entry_item{
         color: @dark-color;
         font-size: 20px;
@@ -369,7 +373,7 @@
         padding: 8px;
         background: white;
         border-radius: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         width: 100%;
         display: flex;
         align-items: center;
@@ -533,6 +537,13 @@
 
 .single-events-item{
 
+    .btn-primary{
+        width: 100%;
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
     .date_container{
         background: url("../../assets/images/bg_events_list.jpg") center no-repeat;
         background-size: cover;
@@ -546,6 +557,7 @@
         text-align: center;
         padding: 0;
         position: relative;
+        margin-bottom: 35px;
 
         .breakpoint-large-down({
             margin-bottom: 20px;
@@ -565,6 +577,8 @@
                 z-index: 0;
             });
         }
+
+
     }
 
     .col-md-9.col-xs-12{

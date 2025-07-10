@@ -125,7 +125,7 @@ $this['slug'] = $this->param('slug');
             <a href="/events" class="go-back-link">Back</a>
         </div>
         <div class="col-md-3 col-xs-12 center-xs">
-            <div class="date_container mb-4">
+            <div class="date_container">
                 <span>{% if entry.start|date("j") == entry.end|date("j") %} {{entry.start|date("j M")}} {% elseif entry.start|date("M") == entry.end|date("M") %} {{entry.start|date("j")}}-{{entry.end|date("j M")}} {% else %} {{entry.start|date("d M")}} - {{entry.end|date("d M")}}{% endif %}</span>
             </div>
 
