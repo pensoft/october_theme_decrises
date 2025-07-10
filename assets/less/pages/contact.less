@@ -1,0 +1,102 @@
+.contact{
+    .width100{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.profile-item{
+    width: 100%;
+    .contact_info {
+        background: @white-color;
+        border-radius: 10px;
+        margin-bottom: 40px;
+        padding: 28px;
+        //width: 345px;
+        max-width: 100%;
+        text-align: center;
+        justify-content: center;
+        //.email_container{
+        //    background: @link-color;
+        //    border-radius: 6px;
+        //    display: flex;
+        //    justify-content: center;
+        //    align-items: center;
+        //    text-align: center;
+        //    padding: 1px 0;
+        //}
+        //.coordinator_image{
+        //    img{
+        //        object-fit: cover;
+        //        width: 324px;
+        //        height: 274px;
+        //        max-width: 100%;
+        //    }
+        //}
+        .coordinator_info{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            width: 100%;
+            color: #06223C;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: 120%; /* 16.8px */
+            letter-spacing: -0.42px;
+            text-align: left;
+
+            //h3{
+            //    display: flex;
+            //    justify-content: start;
+            //    padding: 0;
+            //    margin: 0;
+            //    .breakpoint-large-down({
+            //        display: flex;
+            //        justify-content: center;
+            //    });
+            //}
+            h3{
+                color: #06223C;
+                font-family: Manrope;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: -0.36px;
+                margin-bottom: 6px;
+                text-align: left;
+            }
+            .btn{
+                padding: 6px;
+                width: 100%;
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: @link-color;
+                border: 1px solid @link-color;
+                border-radius: 10px;
+                color: white;
+                font-weight: 300;
+                &:hover{
+                    background: @secondary-btn-color;
+                }
+                i{
+                    background: url("../../assets/images/email-icon.svg") no-repeat;
+                    width: 20px;
+                    height: 18px;
+                    margin-top: 5px;
+                    margin-right: 5px;
+                }
+            }
+        }
+
+        .breakpoint-large-down({
+            width: 100%;
+        });
+    }
+}
+
+

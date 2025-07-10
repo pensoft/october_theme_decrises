@@ -1,0 +1,41 @@
+url = "/about"
+layout = "default"
+title = "About"
+is_hidden = 0
+meta_description = "about page"
+seo_keywords = "keywords"
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+[jumbotron about_intro]
+jumbotron = "about-project"
+title = 1
+background = "transperant"
+templates = "template3"
+description_limit = 0
+
+[jumbotron objectives]
+jumbotron = "objectives"
+title = 1
+background = "transperant"
+templates = "template3"
+description_limit = 0
+==
+{% component 'siteSearchInclude' %}
+
+<div class="container about_intro">
+    <div class="row middle-xs">
+        <div class="col-md-6 col-xs-12">
+        {% component 'about_intro' %}
+        </div>
+        <div class="col-md-6 col-xs-12 end-md center-xs"><img src="{{'about.png'|media}}"></div>
+    </div>
+</div>
+
+<div class="container objectives">
+
+    {% component 'objectives' %}
+
+</div>

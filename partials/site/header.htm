@@ -1,0 +1,113 @@
+[menu]
+start = "id-1"
+activeNode = 0
+listItemClasses = "nav-item"
+primaryClasses = "navbar-nav"
+secondaryClasses = "dropdown-menu"
+numberOfLevels = 2
+
+[jumbotron]
+jumbotron = "intro"
+background = "transperant"
+templates = "template1"
+description_limit = 0
+
+[menu login]
+start = "id-27"
+activeNode = "id-25"
+listItemClasses = "item"
+primaryClasses = "nav nav-pills"
+secondaryClasses = "dropdown-menu"
+numberOfLevels = 2
+==
+
+
+<nav class="pr-1 pl-1 navbar fixed" id="headernavbar">
+    <div id="menuToggle">
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+        {% component 'menu' %}
+    </div>
+    <a href="{{'home'|page}}" class="navbar-brand" style="background: url('{{ this.theme.site_logo.getPath() }}') center no-repeat; background-size: contain;">
+
+    </a>
+
+    <div class="navbar-collapse collapse center-xs" id="headerNavbarNav" style="display: none;">
+        {% component 'menu' %}
+
+    </div>
+<!--    <div class="search-and-social-media hidden-xs">-->
+<!--        <ul class="navbar-nav">-->
+<!--            <li class="nav-item social">-->
+<!--                <div class="search-btn">-->
+<!--                    <a class="col-xs-12 search-text">Search</a>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <div id="search" class="search" style="display: none;">-->
+<!--        <div class="container">-->
+<!--            <form class="input-group align-items-start" action="{{ url('search')}}" method="get">-->
+<!--                <input class="form-control search_input" style="color: #000;" name="q" type="text" autocomplete="on" placeholder="Search">-->
+<!--                <button class="btn btn-link pr p-search big text-grey-search-btn" type="submit"></button>-->
+<!--                <div class="close-search" onclick="hideSearchForm();">&#10006;</div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+</nav>
+
+
+{% if this.theme.header_image and page_id != 'search' %}
+<div class="header-image {{page_id}}">
+    {% if page_id != 'search' %}
+    {% if page_id == 'home' %}
+    <div class="header-image-bar" style="background-image: url('{{this.theme.header_image.getPath()}}'); background-position: left center;">
+        <div class="container jumbotron">
+            <div class="container">
+                <div class="intro hero">
+                    <h1>{{tag_line|raw}}</h1>
+                </div>
+            </div>
+            <div class="container about_info">
+                <div class="row between-md around-xs">
+                    <div class="col-md-4 col-xs-12 start-md around-xs info_and_btn">
+                        DeCrises: Empowering decision-makers with integrated crisis management tools.
+                        <a href="/about" class="learn_more">Learn more</a>
+                    </div>
+                    <div class="col-md-8 col-xs-12 end-md around-xs btns">
+                        <div class="about_btn">Green future</div>
+                        <div class="about_btn">Multilevel governance</div>
+                        <div class="about_btn">Тwin transition</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    {%if this.page.header_image %}
+    <div class="header-image-bar hero" style="background: url('{{this.page.header_image|media}}') left center no-repeat; background-size: cover;">
+        <div class="container jumbotron">
+            {% if page_id != 'home' and page_id != 'search' %}
+            <h1 class="underline white">
+                {%if page_title%} {{page_title}} {%else%} {{site_name}} {%endif%}</h1>
+            {%endif%}
+        </div>
+    </div>
+    {%else%}
+    <div class="header-image-bar" style="background-image: url('{{this.theme.header_image.getPath()}}'); background-position: left center;">
+        <div class="container jumbotron hero">
+            {% if page_id != 'home' and page_id != 'search' and page_id != 'open-call-projects' %}
+            <h1 class="underline white">
+                {%if page_title%} {{page_title}} {%else%} {{site_name}} {%endif%}</h1>
+            {%endif%}
+        </div>
+    </div>
+    {%endif%}
+    {%endif%}
+    {%endif%}
+
+</div>
+{% endif %}

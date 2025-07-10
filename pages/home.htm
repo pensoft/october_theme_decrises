@@ -1,0 +1,121 @@
+url = "/"
+layout = "default"
+title = "DeCrises"
+is_hidden = 0
+meta_description = "The DeCrises project"
+robot_index = "index"
+robot_follow = "follow"
+
+[jumbotron vision]
+jumbotron = "vision"
+background = "transperant"
+templates = "template3"
+description_limit = 0
+
+[jumbotron mission]
+jumbotron = "mission"
+background = "transperant"
+templates = "template3"
+description_limit = 0
+==
+<?php
+use Pensoft\Articles\Models\Article;
+use Pensoft\Calendar\Models\Entry;
+use Carbon\Carbon;
+
+
+function onStart(){
+
+    $this['entries'] = Entry::where('end', '>', Carbon::now())->where('show_on_timeline', true)->where('is_internal', false)->orderBy('start', 'asc')->take(3)->get();
+
+    $this['highlights'] = Article::news()->where('published', 'true')->descPublished()->take(3)->get()->map(function($item){
+        $item->content = str_limit(strip_tags($item->content), 90);
+        $item->href = $item->slug;
+        return $item;
+    });
+}
+?>
+==
+<!-- Vision -->
+<div class="container vision">
+    <div class="row between-md around-xs">
+        <div class="col-md-7 col-xs-12">
+        {% component 'vision' %}
+            <a href="/about" class="btn-primary">Learn more</a>
+        </div>
+        <div class="col-md-5 col-xs-12 end-md center-xs"><img src="{{'vision.png'|media}}"> </div>
+    </div>
+</div>
+<!-- Mission -->
+<div class="container mission">
+    <div class="row between-md around-xs middle-xs">
+        <div class="col-md-5 col-xs-12 start-md center-xs"><img src="{{'mission.png'|media}}"> </div>
+        <div class="col-md-7 col-xs-12">
+        {% component 'mission' %}
+            <a href="/about" class="btn-primary">Learn more</a>
+        </div>
+    </div>
+</div>
+
+<!-- News -->
+{% if highlights.count %}
+<div class="latest-news-container">
+
+    <div class="container mb-0 pb-0">
+        <div class="row nav-row">
+            <div class="col-md-9 col-xs-12">
+                <h1>Latest news</h1>
+            </div>
+            <div class="col-md-3 col-xs-12 view-all-button">
+                <a href="{{'news'|page}}" class="btn btn-primary">View all news</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container home-container">
+        <div class="row highligts-row">
+            <div class="col-md-8 col-xs-12 latest-news">
+                {% if highlights|length %}
+                <div class="news-card">
+                    <div class="img-container">
+                        <a href="{{'news'|page}}/{{highlights[0].slug}}">
+                            <img src="{{ highlights[0].cover.path }}" alt="{{ highlights[0].title }}">
+                        </a>
+
+                        <a class="news-title" href="{{'news'|page}}/{{highlights[0].slug}}">
+                            <div class="news-date">
+                                 {{ highlights[0].published_at|date('d F Y')|upper }}
+                            </div>
+                            <div class="title">
+                                <h3>{{ highlights[0].title|length > 70 ? highlights[0].title|striptags|slice(0, 70)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlights[0].title|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4 col-xs-12 highlight-news">
+                {% for article in highlights|slice(1, 2) %}
+                <div class="row news-card">
+                    <div class="img-container">
+                        <a href="{{'news'|page}}/{{article.slug}}">
+                            <img src="{{ article.cover.path }}" alt="{{ article.title }}">
+                        </a>
+
+                        <a class="news-title" href="{{'news'|page}}/{{article.slug}}">
+                            <div class="news-date">
+                                    {{ article.published_at|date('d F Y')|upper }}
+                            </div>
+                            <div class="title">
+                                <h3>{{ article.title|length > 70 ? article.title|striptags|slice(0, 70)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : article.title|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
