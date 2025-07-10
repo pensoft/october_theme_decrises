@@ -652,8 +652,6 @@ ul.pagination{
         letter-spacing: -0.96px;
         a{
             margin-top: 20px;
-            border-radius: 26px;
-            background: #000;
             width: 128px;
             height: 38px;
             display: flex;
@@ -666,13 +664,16 @@ ul.pagination{
             font-weight: 84;
             line-height: normal;
             letter-spacing: -0.45px;
+            border-radius: 16px;
+            background: @link-color;
+            backdrop-filter: blur(13.050000190734863px);
 
             .breakpoint-large-down({
                 margin: 25px auto;
             });
 
             &:hover{
-                background: #28CD54;
+                background: @secondary-btn-color;
             }
         }
     }
