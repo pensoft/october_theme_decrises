@@ -82,7 +82,7 @@ $this['slug'] = $this->param('slug');
 
     <div class="container events_container">
         <div class="row" id="listView">
-            <div class="events_list_container">
+            <div class="events_list_container mb-4">
                 {% for entry in entries %}
                 {% set url = entry.url ?  entry.url : '/events/' ~ entry.slug %}
                 <div class="row entry_item middle-xs">

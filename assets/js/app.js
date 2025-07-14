@@ -55,7 +55,7 @@ $(document).ready(function () {
         divs.slice(i, i + 2).wrapAll('<div class="col-xs" />');
     }
 
-    $('.library-item .btn-primary').each(function (){
+    $('.library .library-item .btn-primary').each(function (){
         $(this).html('<i></i> Download');
     });
 

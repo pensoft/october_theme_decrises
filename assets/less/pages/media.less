@@ -577,38 +577,19 @@
     }
 }
 
-
-
-.press-relies-item{
-    width: 100%;
-    max-width: 100%;
-    background-color: #DEE7F1;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-
-    .breakpoint-large-down({
-        width: auto;
-    });
-
-    .card-title{
-        font-size: 25px;
-    }
-
-    .date{
-        font-size: 18px;
-        color: @yellow-color;
-        text-transform: uppercase;
-    }
-
-    .btn{
-        padding: 10px 25px;
-        margin-right: 20px;
-        .breakpoint-large-down({
-            margin-right: 10px;
-            margin-bottom: 20px;
-            padding: 10px 15px;
-        });
+.press-releases{
+    .library-item{
+        height: 100%;
+        .row{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .btn-primary{
+            position: relative;
+            width: 100%;
+            margin-top: 11px!important;
+        }
     }
 }
 
