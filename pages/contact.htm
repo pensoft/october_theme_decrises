@@ -33,7 +33,7 @@ function onStart(){
                     <div>
                         {% if profile.email %}
                         <a href="mailto:{{profile.email}}" class="btn btn-primary mail">
-                            <i></i>{{profile.email}}
+                            <i></i>{{ profile.email|replace({'@': '[at]'}) }}
                         </a>
                         {% endif %}
                     </div>

@@ -4,6 +4,11 @@ title = "Case studies"
 
 [siteSearchInclude]
 
+[jumbotron intro]
+jumbotron = "case-studies-intro"
+background = "transperant"
+templates = "template3"
+description_limit = 0
 ==
 <?php
 function onStart(){
@@ -13,6 +18,10 @@ function onStart(){
 ?>
 ==
 {% component 'siteSearchInclude' %}
+
+{% component 'intro' %}
+
+
 <div class="container">
     <span class="tooltiptext" id="tooltip">Bulgaria</span>
     {% partial 'map' %}

@@ -208,7 +208,7 @@ $(document).ready(function () {
 
     });
 
-    $('.events .tabs').each(function(){
+    $('.events .tabs, .partners .tabs').each(function(){
         // For each set of tabs, we want to keep track of
         // which tab is active and its associated content
         var $active, $content, $links = $(this).find('a');
@@ -223,6 +223,9 @@ $(document).ready(function () {
         }
 
         if($(this).parent().parent().hasClass('events')){
+            $active.addClass('active');
+        }
+        if($(this).parent().parent().hasClass('partners')){
             $active.addClass('active');
         }
 
@@ -283,34 +286,8 @@ $(document).ready(function () {
         });
     });
 
-    // $( ".subtabs_events" ).tabs();
-    // openParentTab();
-
 
 });
-//
-// function openParentTab() {
-//     locationHash = location.hash.substring( 1 );
-//     // Check if we have an location Hash
-//     if (locationHash) {
-//         // Check if the location hash exsist.
-//         var hash = jQuery('#'+locationHash);
-//         if (hash.length) {
-//             // Check of the location Hash is inside a tab.
-//             if (hash.closest(".tabContent").length) {
-//                 // Grab the index number of the parent tab so we can activate it
-//                 var tabNumber = hash.closest(".tabContent").index();
-//                 jQuery(".tabs.fix").tabs({ active: tabNumber });
-//                 // Not need but this puts the focus on the selected hash
-//                 hash.get(0).scrollIntoView();
-//                 setTimeout(function() {
-//                     hash.get(0).scrollIntoView();
-//                 }, 1000);
-//             }
-//         }
-//     }
-// }
-
 
 
 function expandBiography(el){
@@ -408,34 +385,6 @@ function encodeURIObject(data) {
     }).join('&');
 }
 
-// function appendProfile() {
-//     $(document).on('profile', function (e) {
-//         var headerNavbarNav = $('.search-and-social-media');
-//         var li = '<li class="nav-item sign-in"><a href="/profile" target = "_self">Profile</a></li >';
-//         headerNavbarNav.find('>ul').append(li);
-//     });
-// }
-//
-// function appendSignIn() {
-//     $(document).on('signin', function (e) {
-//         var headerNavbarLogin = $('.search-and-social-media');
-//         var li = '<li class="nav-item sign-in"><a href="/login" target = "_self">Login</a></li >';
-//         headerNavbarLogin.find('>ul').append(li);
-//         var menu = $('#menuToggle');
-//         menu.find('>ul').append(li);
-//     });
-// }
-//
-// function appendSignOut() {
-//     $(document).on('signout', function (e) {
-//         var headerNavbarNav = $('.search-and-social-media');
-//         var li = '<li class="nav-item  sign-in"><a data-request="onLogout" data-request-data="redirect: \'/\'"> Log out</a></li >';
-//         headerNavbarNav.find('>ul').append(li);
-//         var menu = $('#menuToggle');
-//         menu.find('>ul').append(li);
-//     });
-// }
-
 
 function redirectAndRefresh(url) {
     $(".tabs a").each(function () {
@@ -469,107 +418,6 @@ function requestFormLibrary() {
         $form.request();
     })
 }
-//
-// function requestFormPartners() {
-//     $('#myPartnersForm').on('click', 'a', function () {
-//         var $form = $(this).closest('form');
-//         $form.request();
-//     })
-// }
-//
-// function isScrolledIntoView(elem) {
-//     var docViewTop = $(window).scrollTop();
-//     var docViewBottom = docViewTop + $(window).height();
-//
-//     if ($(elem).height()) {
-//         var elemTop = $(elem).offset().top;
-//         var elemBottom = elemTop + $(elem).height();
-//
-//         return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-//     }
-//     return;
-//
-// }
-
-
-//
-//
-// function scrollDown() {
-//     var element = $('#layout-content');
-//     $("html, body").animate({ scrollTop: element.offset().top - 190 }, 500);
-// }
-
-
-//
-// function hideMe(elem) {
-//     $(elem).parent().hide();
-// }
-//
-// function fetchMails(i, searchStr) {
-//     // $('.group_mailing_list').hide();
-//     if ($('.group_mailing_list_' + i).is(":visible")) {
-//         $('.group_mailing_list_' + i).hide();
-//     } else {
-//         //groups
-//         $.request('onFetchMailingList', {
-//             update: {
-//                 'mailing_list': '#mailing_list_tooltip_content_' + i,
-//             },
-//             data: {
-//                 search_str: searchStr
-//             },
-//         }).then(response => {
-//             $('.group_mailing_list_' + i).html('<a class="close-btn" onclick="hideMe(this)">X</a>' + response.mailing_list);
-//         });
-//         $('.group_mailing_list').hide();
-//         $('.group_mailing_list_' + i).show();
-//     }
-//
-// }
-
-//
-// function fetchSingleMail(i, searchStr) {
-//     if ($('.single_mailing_list_' + i).is(":visible")) {
-//         $('.single_mailing_list_' + i).hide();
-//     } else {
-//         //groups
-//         $.request('onFetchSingleMail', {
-//             update: {
-//                 'individual_email': '#individual_tooltip_content_' + i,
-//             },
-//             data: {
-//                 search_str: searchStr
-//             },
-//         }).then(response => {
-//             $('.single_mailing_list_' + i).html('<a class="close-btn" onclick="hideMe(this)">X</a>' + response.individual_email);
-//         });
-//         $('.single_mailing_list').hide();
-//         $('.single_mailing_list_' + i).show();
-//     }
-// }
-//
-// function initMailingTooltip() {
-//     var searchStr = '';
-//     $('.group-holder').eq(0).find('.inputWithTooltip span').each(function (i, obj) {
-//         searchStr = $.trim($(obj).text());
-//         $(this).parent().css('display', 'inline-grid');
-//         $('<img src="/storage/app/media/CMS_icons_groups.svg" style="max-width: 16px; margin-left: 5px;" class="icon mailing_list_tooltip_' + i + '" onclick="fetchMails(' + i + ', \'' + searchStr + '\')" />').insertAfter($(this).parent());
-//         $('<div class="group_mailing_list group_mailing_list_' + i + '" style="display: none;"></div>').insertAfter($(this).parent());
-//
-//
-//     });
-//     $('.group-holder').eq(1).find('.inputWithTooltip span').each(function (i, obj) {
-//         searchStr = $.trim($(obj).text());
-//         $('<img src="/storage/app/media/CMS_icons_individuals.svg" style="max-width: 16px; margin-left: 5px;" class="icon mailing_list_tooltip_individuals_' + i + '" onclick="fetchSingleMail(' + i + ', \'' + searchStr + '\')" />').insertAfter($(this).parent());
-//         $(this).parent().css('display', 'inline-grid');
-//         $('<div class="single_mailing_list single_mailing_list_' + i + '" style="display: none;"></div>').insertAfter($(this).parent());
-//     });
-//
-//     $('.group-holder').eq(0).prepend("<p style='margin-left: 10px; width: 100%;'>Prior to sending group emails, please make sure that all individuals you want to contact have been included in the respective group by clicking on the group icon.</p><p></p>");
-//     $('.group-holder').eq(1).prepend("<p style='margin-left: 10px; width: 100%;'>To see each person's email, click on the account icon.</p><p></p>");
-//
-// }
-
 
 function getScreenSize() {
     var myHeight = 0;
@@ -628,13 +476,8 @@ function init() {
             }
         }
         requestFormLibrary()
-        // requestFormPartners()
-        // keepFooter(documentHasScroll());
 
     });
-    // appendProfile()
-    // appendSignIn()
-    // appendSignOut()
 }
 
 function scrollToField(errors) {
@@ -676,23 +519,29 @@ function handlePilotsSVGMapMouseMove(event) {
 
 }
 
+
+function handlePartnersSVGMapMouseMove(event) {
+    var title = $(event.target).parent().attr('title');
+    var slug = $(event.target).parent().attr('slug');
+    var tooltip = document.getElementById("tooltip");
+
+    if (typeof title  == "undefined"){
+        return tooltip.classList.remove("active");
+    }
+    var x = event.clientX;
+    var y = event.clientY;
+
+    tooltip.style.left = (x + 20) + "px";
+    tooltip.style.top = (y - 20) + "px";
+
+    tooltip.innerHTML = '<div class="tooltip_flag_container"><i class="' + slug + '"></i></div>';
+    tooltip.classList.add("active");
+
+}
+
 function onPilots(pTitle) {
-    // $("path").removeClass('active_path');
     var tooltip = document.getElementById("tooltip");
     tooltip.classList.remove("active");
-    // $("g[title='"+pTitle+"']").addClass('active_path');
-
-    // $('.pilots .accordion-border').each(function(){
-    //     var title = $(this).find(".accordion-toggle .title_container").text();
-    //     var toggler = $(this).find(".accordion-toggle");
-    //     toggler.next(".accordion-content").hide();
-    //
-    //
-    //     if(title.indexOf(pTitle) >= 0 && !toggler.next(".accordion-content").is(':visible')){
-    //         toggler.trigger( "click" );
-    //         $("html, body").animate({ scrollTop: toggler.offset().top - 190 }, 500);
-    //     }
-    // });
 }
 
 
