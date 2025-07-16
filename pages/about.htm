@@ -22,6 +22,12 @@ title = 1
 background = "transperant"
 templates = "template3"
 description_limit = 0
+
+[jumbotron bottom_section]
+jumbotron = "about-bottom-section"
+background = "transperant"
+templates = "template3"
+description_limit = 0
 ==
 {% component 'siteSearchInclude' %}
 
@@ -38,4 +44,8 @@ description_limit = 0
 
     {% component 'objectives' %}
 
+</div>
+
+<div class="container-fluid about_bottom_section">
+    {% component 'bottom_section' %}
 </div>

@@ -280,6 +280,7 @@ ul.pagination{
     }
 
     &.coming-soon,
+    &.contact,
     &.home {
         .header-image-bar {
             //height: calc(~'100vh');
@@ -323,7 +324,7 @@ ul.pagination{
                 letter-spacing: -2.8px;
                 color: @white-color;
                 .breakpoint-large-down({
-                    font-size: 47px;
+                    font-size: 40px;
                 });
             }
 
@@ -346,7 +347,7 @@ ul.pagination{
             letter-spacing: -0.54px;
 
             .breakpoint-large-down({
-                bottom: 130px;
+                bottom: 75px;
             });
 
             .info_and_btn{
@@ -425,9 +426,15 @@ ul.pagination{
         }
     }
 
+
     &.coming-soon{
         .jumbotron {
             justify-content: center;
+        }
+    }
+    &.contact{
+        .jumbotron {
+            display: none;
         }
     }
 }
@@ -453,6 +460,7 @@ ul.pagination{
         }
     }
 }
+.header-image.contact,
 .header-image.coming-soon{
     .header-image-bar{
         align-items: center;
@@ -460,12 +468,22 @@ ul.pagination{
         height: 100vh;
 
         .breakpoint-large-down({
-            height: unset;
+            min-height: 100vh;
             padding-bottom: unset;
         });
         .jumbotron{
             padding: 0 63px !important;
         }
+    }
+}
+
+.header-image.contact{
+    .header-image-bar{
+
+        .breakpoint-large-down({
+            min-height: 200vh;
+            padding-bottom: unset;
+        });
     }
 }
 

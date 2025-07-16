@@ -1,10 +1,12 @@
 var viewed = false;
 var viewed_mission = false;
 var viewed_vision = false;
+var viewed_about = false;
 
 window.onscroll = function() {
     animateMission()
     animateVision()
+    animateAboutBottom()
 }
 
 var width = window.innerWidth;
@@ -38,6 +40,14 @@ function animateVision(){
     var el = $(".vision .container");
     if (isScrolledIntoView(el) && !viewed_vision) {
         viewed_vision = true;
+        animateAboutText(el);
+    }
+}
+
+function animateAboutBottom(){
+    var el = $(".about_bottom_section .animated_paragraph");
+    if (isScrolledIntoView(el) && !viewed_about) {
+        viewed_about = true;
         animateAboutText(el);
     }
 }
