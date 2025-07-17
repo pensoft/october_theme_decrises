@@ -3,10 +3,10 @@
     <div class="col-md-4 col-xs-12 highlight-news">
         <div class="row news-card">
             <div class="img-container">
-                <a href="{{'news'|page}}/{{record.slug}}">
+                <a href="/news/{{record.slug}}">
                     <img src="{{ record.cover.path }}" alt="{{ record.title }}">
                 </a>
-                <a class="news-title" href="{{'news'|page}}/{{record.slug}}">
+                <a class="news-title" href="/news/{{record.slug}}">
                     <div class="news-date">
                         {{ record.published_at|date('d F Y')|upper }}
                     </div>
