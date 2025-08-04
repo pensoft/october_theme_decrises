@@ -32,12 +32,11 @@ const SUPPORTED_LANGUAGES = [
     { code: 'de', name: 'German', flag: 'de' },
     { code: 'es', name: 'Spanish', flag: 'es' },
     { code: 'fi', name: 'Finnish', flag: 'fi' },
-    { code: 'nl', name: 'Dutch', flag: 'nl' },
-    { code: 'lt', name: 'Latvian', flag: 'lt' },
+    { code: 'lv', name: 'Latvian', flag: 'lv' },
     { code: 'sk', name: 'Slovak', flag: 'sk' },
     { code: 'pl', name: 'Polish', flag: 'pl' },
     { code: 'no', name: 'Norwegian', flag: 'no' },
-    { code: 'li', name: 'Lithuanian', flag: 'li' },
+    { code: 'lt', name: 'Lithuanian', flag: 'lt' },
     { code: 'bg', name: 'Bulgarian', flag: 'bg' },
 ];
 
