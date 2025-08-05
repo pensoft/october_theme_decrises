@@ -67,20 +67,55 @@ ul.partners_logos_list li{
             padding: 15px;
         }
 
+        //.read_more_container{
+        //    width: calc(~'100% - 22px');
+        //    display: flex;
+        //    justify-content: end;
+        //    .read_more{
+        //        height: 18px;
+        //        background: url("../../assets/images/arrow_red.svg") right center no-repeat;
+        //        background-size: contain;
+        //        display: flex;
+        //        width: 22px;
+        //        margin-bottom: 22px;
+        //        transition: all 0.3s ease-in-out;
+        //        &:hover{
+        //            transform: rotate(45deg);
+        //        }
+        //    }
+        //}
+
         .read_more_container{
-            width: calc(~'100% - 22px');
-            display: flex;
-            justify-content: end;
-            .read_more{
-                height: 18px;
-                background: url("../../assets/images/arrow_red.svg") right center no-repeat;
-                background-size: contain;
-                display: flex;
-                width: 22px;
-                margin-bottom: 22px;
+            color: @link-color;
+            position: relative;
+            max-width: fit-content;
+            padding-right: 22px;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: -0.48px;
+            margin: 0 0 12px 15px;
+            transition: all 0.3s ease-in-out;
+
+            .breakpoint-large-down({
+                margin: 0 auto;
+            });
+            &:after{
+                position: absolute;
+                right: 3px;
+                top: 6px;
+                width: 17px;
+                height: 17px;
+                content: '';
                 transition: all 0.3s ease-in-out;
-                &:hover{
-                    transform: rotate(45deg);
+                background: url("../../assets/images/arrow-wp.svg") right center no-repeat;
+                background-size: 11px;
+                transform: rotate(-90deg);
+            }
+            &:hover{
+                &:after{
+                    right: 2px;
                 }
             }
         }
