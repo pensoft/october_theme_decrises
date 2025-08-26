@@ -509,10 +509,10 @@ function handlePilotsSVGMapMouseMove(event) {
     var tooltip = document.getElementById("tooltip");
 
     switch (title) {
-        case 'Riga - Latvia':
-        case 'Sogndal - Norway':
-        case 'Lappeenranta - Finland':
-        case 'Gdansk - Poland':
+        case 'Green Region Vestland (Norway)':
+        case 'Fingrid Datahub (Finland)':
+        case 'Municipality of Potęgowo (Poland)':
+        case 'City of Riga (Latvia)':
             break;
         default:
             return tooltip.classList.remove("active");

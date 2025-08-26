@@ -4,7 +4,6 @@ title = "Partners"
 is_hidden = 0
 robot_index = "index"
 robot_follow = "follow"
-
 ==
 <?php
 use Pensoft\Partners\Models\Partners;
@@ -47,7 +46,6 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
 }
 ?>
 ==
-
 <div class="container tabs_container">
     <div class="tabs">
         <a class="" href="#listView">List view</a>
@@ -110,7 +108,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-xs-12">
-                                                    <p class="read-more" onclick="expandBiography(this);">Biography</p>
+                                                    <p class="read-more" onclick="expandBiography(this);">Read more</p>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="body" style="display: none;">{{ profile.content|raw }}</div>
@@ -177,7 +175,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-xs-12">
-                                        <p class="read-more" onclick="expandBiography(this);">Biography</p>
+                                        <p class="read-more" onclick="expandBiography(this);">Read more</p>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="body" style="display: none;">{{ profile.content|raw }}</div>
