@@ -485,10 +485,12 @@ function init() {
                 });
             }
         }
-        requestFormLibrary()
+        requestFormLibrary();
+        checkCookie();
 
     });
 }
+
 
 function scrollToField(errors) {
     $(".get_involved_form input, .get_involved_form select, .get_involved_form .row").removeClass('red_err_field');
@@ -501,6 +503,43 @@ function scrollToField(errors) {
     });
 }
 
+
+function setCookie(cname,cvalue,exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function checkCookie() {
+    // $('#cookieAcceptBar').hide();
+    let info = getCookie("googleTranslateInfoMessage");
+    if (info) {
+        // cookie is set
+        $('#cookieAcceptBar').hide();
+    }
+}
+
+function closeGoogleInfoBar(){
+    setCookie('googleTranslateInfoMessage', 1, 90);
+    $('#cookieAcceptBar').toggle("slow");
+}
 
 
 function handlePilotsSVGMapMouseMove(event) {

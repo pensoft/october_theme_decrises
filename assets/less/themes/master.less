@@ -811,3 +811,68 @@ ul.pagination{
     font-weight: bold;
 }
 
+
+
+.cookieAcceptBar {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    border-radius: 10px;
+    width: 386px;
+    max-width: 80%;
+    height: 125px;
+    z-index: 99999;
+    //-webkit-transform: translateY(-50%);
+    //transform: translateY(-50%);
+    padding: 14px 17px 14px 55px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: #FFF url("../../assets/images/Google_Translate_logo.svg") no-repeat;
+    background-position: 14px 31px;
+    background-size: 27px;
+
+    p{
+        color: #919191;
+        font-family: Geist;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 84;
+        line-height: 120%; /* 14.4px */
+        letter-spacing: -0.36px;
+        margin-bottom: 0;
+        strong{
+            color: #383838;
+            margin-bottom: 20px;
+
+            font-family: Geist;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 120%; /* 15.6px */
+            letter-spacing: -0.39px;
+        }
+    }
+
+    a{
+        cursor: pointer;
+        position: absolute;
+        top: 14px;
+        right: 14px;
+    }
+
+    button {
+        cursor: pointer;
+        border: none;
+        background-color: #2387c0;
+        color: #fff;
+        text-transform: uppercase;
+        margin-top: 10px;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+    }
+}
+
+
