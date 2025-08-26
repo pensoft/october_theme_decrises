@@ -29,6 +29,14 @@ background = "transperant"
 templates = "template3"
 description_limit = 0
 ==
+<?php
+use Pensoft\Cardprofiles\Models\Profiles;
+
+function onStart(){
+	$this['profiles'] =  Profiles::where('category_id', 1)->get();
+}
+?>
+==
 {% component 'siteSearchInclude' %}
 
 <div class="container about_intro">
@@ -49,3 +57,4 @@ description_limit = 0
 <div class="container-fluid about_bottom_section">
     {% component 'bottom_section' %}
 </div>
+

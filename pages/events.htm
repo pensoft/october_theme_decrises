@@ -93,6 +93,7 @@ $this['slug'] = $this->param('slug');
                         {% endif %}
                         >
                             <span>{{entry.start|date("j M")}}</span>
+                            <span>{{entry.start|date("Y")}}</span>
                         </div>
                     </div>
                     <div class="col-md-8 col-xs-12 body_container">
@@ -135,6 +136,7 @@ $this['slug'] = $this->param('slug');
                  {% endif %}
             >
                 <span>{% if entry.start|date("j") == entry.end|date("j") %} {{entry.start|date("j M")}} {% elseif entry.start|date("M") == entry.end|date("M") %} {{entry.start|date("j")}}-{{entry.end|date("j M")}} {% else %} {{entry.start|date("d M")}} - {{entry.end|date("d M")}}{% endif %}</span>
+                <span>{{entry.start|date("Y")}}</span>
             </div>
 
             {% if entry.url %}
