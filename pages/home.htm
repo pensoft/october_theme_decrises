@@ -36,38 +36,44 @@ function onStart(){
 }
 ?>
 ==
-<!-- Vision -->
-<div class="container vision">
+<!-- Vision Section -->
+<section class="container vision" role="region" aria-labelledby="vision-heading">
     <div class="row between-md around-xs">
         <div class="col-md-7 col-xs-12">
-        {% component 'vision' %}
-            <a href="/about" class="btn-primary">Learn more</a>
+            <h2 id="vision-heading" class="sr-only">Our Vision</h2>
+            {% component 'vision' %}
+            <a href="/about" class="btn-primary" aria-label="Learn more about our vision">Learn more</a>
         </div>
-        <div class="col-md-5 col-xs-12 end-md center-xs" data-aos="fade-up"><img src="{{'vision.png'|media}}"> </div>
+        <div class="col-md-5 col-xs-12 end-md center-xs" data-aos="fade-up">
+            <img src="{{'vision.png'|media}}" alt="Illustration representing our vision for multilevel governance and equitable transitions" role="img">
+        </div>
     </div>
-</div>
-<!-- Mission -->
-<div class="container mission">
+</section>
+
+<!-- Mission Section -->
+<section class="container mission" role="region" aria-labelledby="mission-heading">
     <div class="row between-md around-xs middle-xs">
-        <div class="col-md-5 col-xs-12 start-md center-xs" data-aos="fade-up"><img src="{{'mission.png'|media}}"> </div>
+        <div class="col-md-5 col-xs-12 start-md center-xs" data-aos="fade-up">
+            <img src="{{'mission.png'|media}}" alt="Illustration representing our mission to explore social innovations" role="img">
+        </div>
         <div class="col-md-7 col-xs-12">
-        {% component 'mission' %}
-            <a href="/about" class="btn-primary">About us</a>
+            <h2 id="mission-heading" class="sr-only">Our Mission</h2>
+            {% component 'mission' %}
+            <a href="/about" class="btn-primary" aria-label="Learn more about us and our mission">About us</a>
         </div>
     </div>
-</div>
+</section>
 
-<!-- News -->
+<!-- Latest News Section -->
 {% if highlights.count %}
-<div class="latest-news-container">
-
+<section class="latest-news-container" role="region" aria-labelledby="news-heading">
     <div class="container mb-0 pb-0">
         <div class="row nav-row">
             <div class="col-md-9 col-xs-12">
-                <h1>Latest news</h1>
+                <h2 id="news-heading">Latest news</h2>
             </div>
             <div class="col-md-3 col-xs-12 view-all-button">
-                <a href="{{'news'|page}}" class="btn btn-primary">View all news</a>
+                <a href="{{'news'|page}}" class="btn btn-primary" aria-label="View all news articles">View all news</a>
             </div>
         </div>
     </div>
@@ -76,46 +82,55 @@ function onStart(){
         <div class="row highligts-row">
             <div class="col-md-8 col-xs-12 latest-news">
                 {% if highlights|length %}
-                <div class="news-card">
+                <article class="news-card" role="article" aria-labelledby="featured-article-title">
                     <div class="img-container">
-                        <a href="{{'news'|page}}/{{highlights[0].slug}}">
-                            <img src="{{ highlights[0].cover.path }}" alt="{{ highlights[0].title }}">
+                        <a href="{{'news'|page}}/{{highlights[0].slug}}" aria-label="Read full article: {{ highlights[0].title|striptags }}">
+                            <img src="{{ highlights[0].cover.path }}"
+                                 alt="Featured image for article: {{ highlights[0].title|striptags }}"
+                                 role="img">
                         </a>
 
-                        <a class="news-title" href="{{'news'|page}}/{{highlights[0].slug}}">
-                            <div class="news-date">
-                                 {{ highlights[0].published_at|date('d F Y')|upper }}
-                            </div>
-                            <div class="title">
-                                <h3>{{ highlights[0].title|length > 70 ? highlights[0].title|striptags|slice(0, 70)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlights[0].title|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
-                            </div>
-                        </a>
+                        <div class="news-content news-title">
+                            <time class="news-date" datetime="{{ highlights[0].published_at|date('Y-m-d') }}" aria-label="Published on {{ highlights[0].published_at|date('d F Y') }}">
+                                {{ highlights[0].published_at|date('d F Y')|upper }}
+                            </time>
+                            <h3 id="featured-article-title" class="title">
+                                <a href="{{'news'|page}}/{{highlights[0].slug}}" aria-describedby="featured-article-date">
+                                    {{ highlights[0].title|length > 70 ? highlights[0].title|striptags|slice(0, 70)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : highlights[0].title|striptags|replace({"&nbsp;": " ", ".": ". "}) }}
+                                </a>
+                            </h3>
+                        </div>
                     </div>
-                </div>
+                </article>
                 {% endif %}
             </div>
 
-            <div class="col-md-4 col-xs-12 highlight-news">
+            <aside class="col-md-4 col-xs-12 highlight-news" role="complementary" aria-label="Additional news articles">
+                <h3 class="sr-only">More recent articles</h3>
                 {% for article in highlights|slice(1, 2) %}
-                <div class="row news-card">
+                <article class="row news-card" role="article" aria-labelledby="article-title-{{loop.index}}">
                     <div class="img-container">
-                        <a href="{{'news'|page}}/{{article.slug}}">
-                            <img src="{{ article.cover.path }}" alt="{{ article.title }}">
+                        <a href="{{'news'|page}}/{{article.slug}}" aria-label="Read full article: {{ article.title|striptags }}">
+                            <img src="{{ article.cover.path }}"
+                                 alt="Image for article: {{ article.title|striptags }}"
+                                 role="img">
                         </a>
 
-                        <a class="news-title" href="{{'news'|page}}/{{article.slug}}">
-                            <div class="news-date">
-                                    {{ article.published_at|date('d F Y')|upper }}
-                            </div>
-                            <div class="title">
-                                <h3>{{ article.title|length > 70 ? article.title|striptags|slice(0, 70)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : article.title|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
-                            </div>
-                        </a>
+                        <div class="news-content news-title">
+                            <time class="news-date" datetime="{{ article.published_at|date('Y-m-d') }}" aria-label="Published on {{ article.published_at|date('d F Y') }}">
+                                {{ article.published_at|date('d F Y')|upper }}
+                            </time>
+                            <h4 id="article-title-{{loop.index}}" class="title">
+                                <a href="{{'news'|page}}/{{article.slug}}" aria-describedby="article-date-{{loop.index}}">
+                                    {{ article.title|length > 70 ? article.title|striptags|slice(0, 70)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : article.title|striptags|replace({"&nbsp;": " ", ".": ". "}) }}
+                                </a>
+                            </h4>
+                        </div>
                     </div>
-                </div>
+                </article>
                 {% endfor %}
-            </div>
+            </aside>
         </div>
     </div>
-</div>
+</section>
 {% endif %}

@@ -44,17 +44,21 @@ function onStart(){
         <div class="col-md-6 col-xs-12">
         {% component 'about_intro' %}
         </div>
-        <div class="col-md-6 col-xs-12 end-md center-xs" data-aos="fade-up"><img src="{{'about.png'|media}}"></div>
+        <div class="col-md-6 col-xs-12 end-md center-xs" data-aos="fade-up">
+            <img src="{{'about.png'|media}}"
+                 alt="Illustration representing the DeCrises project's approach to democratic governance and multilevel collaboration"
+                 role="img"></div>
     </div>
 </div>
 
-<div class="container objectives">
+<section class="container objectives" role="region" aria-labelledby="objectives-heading">
 
     {% component 'objectives' %}
 
-</div>
+</section>
 
-<div class="container-fluid about_bottom_section">
+
+<section class="container-fluid about_bottom_section" role="region" aria-labelledby="mission-statement">
     {% component 'bottom_section' %}
-</div>
+</section>
 
