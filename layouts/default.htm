@@ -26,7 +26,7 @@ escape = 1
     <link href="{{ ['assets/css/scale.css']|theme }}" rel="stylesheet">
     <link href="{{ ['assets/css/light.css']|theme }}" rel="stylesheet">
     <script src="{{ 'assets/js/jquery.js'|theme }}"></script>
-<!--    <script src="{{ 'assets/js/translation.js'|theme }}"></script>-->
+    <script src="{{ 'assets/js/translation.js'|theme }}"></script>
     <script src="{{ 'assets/js/app.js'|theme }}"></script>
     <script src="{{ 'assets/js/animations.js'|theme }}"></script>
     <script src="{{ 'assets/js/jquery-ui.js'|theme }}"></script>
@@ -36,9 +36,13 @@ escape = 1
     <script src="{{ 'assets/js/aos.js'|theme }}"></script>
     <script src="https://cdn.userway.org/widget.js" data-account="dHcqEw1u9a"></script>
 
+    <!-- Hidden element for Google Translate API access -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <div id="google_translate_element_hidden" style="display: none;"></div>
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
 
 
 <!-- Google Tag Manager -->

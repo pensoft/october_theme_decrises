@@ -48,11 +48,13 @@ function onSwitchLocale(){
         {% component 'menu' %}
     </div>
 
-    <select class="locale-select form-control" onchange="window.location.assign(this.value)">
-        {% for code, name in locales %}
-        <option data-lang="{{code}}" value="{{ this.page.url|localeUrl(code) }}" {{ code == activeLocale ? 'selected' }}>{{ name }}</option>
-        {% endfor %}
-    </select>
+    <div id="google_translate_element" aria-label="Google Translate"></div>
+
+<!--    <select class="locale-select form-control" onchange="window.location.assign(this.value)">-->
+<!--        {% for code, name in locales %}-->
+<!--        <option data-lang="{{code}}" value="{{ this.page.url|localeUrl(code) }}" {{ code == activeLocale ? 'selected' }}>{{ name }}</option>-->
+<!--        {% endfor %}-->
+<!--    </select>-->
 
 </nav>
 
