@@ -8,7 +8,7 @@
                 </a>
                 <a class="news-title" href="/news/{{record.slug}}">
                     <div class="news-date">
-                        {{ record.published_at|date('d F Y')|upper }}
+                        {{record.published_at|date("d")}} {{record.published_at|date("F")|upper|_}} {{record.published_at|date("Y")}}
                     </div>
                     <div class="title">
                         <h3>{{ record.title|length > 70 ? record.title|striptags|slice(0, 70)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.title|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</h3>

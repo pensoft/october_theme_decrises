@@ -40,9 +40,9 @@ function onStart(){
 <section class="container vision" role="region" aria-labelledby="vision-heading">
     <div class="row between-md around-xs">
         <div class="col-md-7 col-xs-12">
-            <h2 id="vision-heading" class="sr-only">Our Vision</h2>
+            <h2 id="vision-heading" class="sr-only">{{'Our Vision'|_}}</h2>
             {% component 'vision' %}
-            <a href="/about" class="btn-primary" aria-label="Learn more about our vision">Learn more</a>
+            <a href="/about" class="btn-primary" aria-label="Learn more about our vision">{{'Learn more'|_}}</a>
         </div>
         <div class="col-md-5 col-xs-12 end-md center-xs" data-aos="fade-up">
             <img src="{{'vision.png'|media}}" alt="Illustration representing our vision for multilevel governance and equitable transitions" role="img">
@@ -57,9 +57,9 @@ function onStart(){
             <img src="{{'mission.png'|media}}" alt="Illustration representing our mission to explore social innovations" role="img">
         </div>
         <div class="col-md-7 col-xs-12">
-            <h2 id="mission-heading" class="sr-only">Our Mission</h2>
+            <h2 id="mission-heading" class="sr-only">{{'Our Mission'|_}}</h2>
             {% component 'mission' %}
-            <a href="/about" class="btn-primary" aria-label="Learn more about us and our mission">About us</a>
+            <a href="/about" class="btn-primary" aria-label="Learn more about us and our mission">{{'About us'|_}}</a>
         </div>
     </div>
 </section>
@@ -70,10 +70,10 @@ function onStart(){
     <div class="container mb-0 pb-0">
         <div class="row nav-row">
             <div class="col-md-9 col-xs-12">
-                <h2 id="news-heading">Latest news</h2>
+                <h2 id="news-heading">{{'Latest news'|_}}</h2>
             </div>
             <div class="col-md-3 col-xs-12 view-all-button">
-                <a href="{{'news'|page}}" class="btn btn-primary" aria-label="View all news articles">View all news</a>
+                <a href="{{'news'|page}}" class="btn btn-primary" aria-label="View all news articles">{{'View all news'|_}}</a>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@ function onStart(){
 
                         <div class="news-content news-title">
                             <time class="news-date" datetime="{{ highlights[0].published_at|date('Y-m-d') }}" aria-label="Published on {{ highlights[0].published_at|date('d F Y') }}">
-                                {{ highlights[0].published_at|date('d F Y')|upper }}
+                                {{highlights[0].published_at|date("d")}} {{highlights[0].published_at|date("F")|upper|_}} {{highlights[0].published_at|date("Y")}}
                             </time>
                             <h3 id="featured-article-title" class="title">
                                 <a href="{{'news'|page}}/{{highlights[0].slug}}" aria-describedby="featured-article-date">
@@ -106,7 +106,7 @@ function onStart(){
             </div>
 
             <aside class="col-md-4 col-xs-12 highlight-news" role="complementary" aria-label="Additional news articles">
-                <h3 class="sr-only">More recent articles</h3>
+                <h3 class="sr-only">{{'More recent articles'|_}}</h3>
                 {% for article in highlights|slice(1, 2) %}
                 <article class="row news-card" role="article" aria-labelledby="article-title-{{loop.index}}">
                     <div class="img-container">
@@ -118,7 +118,7 @@ function onStart(){
 
                         <div class="news-content news-title">
                             <time class="news-date" datetime="{{ article.published_at|date('Y-m-d') }}" aria-label="Published on {{ article.published_at|date('d F Y') }}">
-                                {{ article.published_at|date('d F Y')|upper }}
+                                {{article.published_at|date("d")}} {{article.published_at|date("F")|upper|_}} {{article.published_at|date("Y")}}
                             </time>
                             <h4 id="article-title-{{loop.index}}" class="title">
                                 <a href="{{'news'|page}}/{{article.slug}}" aria-describedby="article-date-{{loop.index}}">
