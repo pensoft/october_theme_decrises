@@ -289,7 +289,65 @@ $(document).ready(function () {
     });
 
 
+    /* LANGUAGE SWITCH */
+
+    document.querySelectorAll('select.locale-select').forEach(function(select) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'custom-select';
+        select.parentNode.insertBefore(wrapper, select);
+        wrapper.appendChild(select);
+
+        var selected = select.options[select.selectedIndex];
+
+        var trigger = document.createElement('div');
+
+        var selectedCode = selected.value.split('/')[1] || selected.value.split('/')[0];
+
+        trigger.className = 'custom-select__trigger';
+        trigger.innerHTML = '<span class="flag-icon flag-icon-' + selectedCode + '"></span> <span>' + selectedCode + '</span>';
+        wrapper.appendChild(trigger);
+
+        var list = document.createElement('div');
+        list.className = 'custom-select__options';
+
+        for (var i = 0; i < select.options.length; i++) {
+            var opt = select.options[i];
+            var item = document.createElement('div');
+            item.className = 'custom-select__option' + (opt.selected ? ' is-selected' : '');
+            item.dataset.value = opt.value;
+
+            // Extract locale code from option value for display
+            var localeCode = opt.value.split('/')[1] || opt.value.split('/')[0];
+            item.innerHTML = '<span class="flag-icon flag-icon-' + localeCode + '"></span> ' + opt.text ;
+            list.appendChild(item);
+        }
+        wrapper.appendChild(list);
+
+        trigger.onclick = function(e) {
+            e.stopPropagation();
+            document.querySelectorAll('.custom-select.is-open').forEach(function(el) {
+                if (el !== wrapper) el.classList.remove('is-open');
+            });
+            wrapper.classList.toggle('is-open');
+        };
+
+        list.onclick = function(e) {
+            var option = e.target.closest('.custom-select__option');
+            if (option) window.location.assign(option.dataset.value);
+        };
+    });
+
+    document.addEventListener('click', function() {
+        document.querySelectorAll('.custom-select.is-open').forEach(function(el) {
+            el.classList.remove('is-open');
+        });
+    });
+
 });
+
+
+
+
 
 
 function expandBiography(el){
@@ -481,6 +539,9 @@ function init() {
         checkCookie();
 
     });
+
+
+
 }
 
 

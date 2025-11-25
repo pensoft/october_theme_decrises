@@ -127,7 +127,7 @@ $this['related'] = $related;
     <div class="row">
         <div class="col-md-12 col-xs-12 mb-2">
             <nav aria-label="Breadcrumb">
-                <a href="/news" class="go-back-link" aria-label="Go back to news list">Back</a>
+                <a href="/news" class="go-back-link" aria-label="Go back to news list">{{'Back'|_}}</a>
             </nav>
         </div>
 
@@ -142,7 +142,7 @@ $this['related'] = $related;
 
                 <div class="row middle-xs">
                     <div class="col-xs col-md start-md center-xs share_container">
-                        <span class="share_label" id="share-label">Share</span>
+                        <span class="share_label" id="share-label">{{'Share'|_}}</span>
                         <div role="group" aria-labelledby="share-label">
                             <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}"
                                target="_blank"
@@ -165,7 +165,7 @@ $this['related'] = $related;
 
             <div class="col-md-7 col-xs-12">
                 <time class="text-published" datetime="{{article.published_at|date('Y-m-d')}}">
-                    {{article.published_at|date("j M Y")}}
+                    {{article.published_at|date("j")}} {{article.published_at|date("F")|upper|_}} {{article.published_at|date("Y")}}
                 </time>
 
                 <h1 class="single-new-title" id="article-title">{{article.title}}</h1>
@@ -177,7 +177,7 @@ $this['related'] = $related;
         </article>
 
         <section class="col-md-12 col-xs-12 related-articles-container" role="region" aria-labelledby="related-heading">
-            <h2 id="related-heading">Other news</h2>
+            <h2 id="related-heading">{{'Other news'|_}}</h2>
             {% partial 'relatedarticles' related=related %}
         </section>
     </div>
@@ -215,8 +215,8 @@ $this['related'] = $related;
                             <img src="{{ record.cover.path }}" alt="Featured image for: {{ record.title|striptags }}">
                         </a>
                         <div class="news-content news-title">
-                            <time class="news-date" datetime="{{ record.published_at|date('Y-m-d') }}">
-                                {{ record.published_at|date('d F Y')|upper }}
+                            <time class="news-date" datetime="{{ record.published_at|date('Y-m-d')|_ }}">
+                                {{record.published_at|date("j")}} {{record.published_at|date("F")|upper|_}} {{record.published_at|date("Y")}}
                             </time>
                             <div class="title">
                                 <h3 id="news-title-{{loop.index}}">

@@ -135,7 +135,7 @@ $this['slug'] = $this->param('slug');
     <article class="row single-events-item" role="article" aria-labelledby="event-detail-title">
         <div class="col-md-12 col-xs-12 mb-2">
             <nav aria-label="Breadcrumb">
-                <a href="/events" class="go-back-link" aria-label="Go back to events list">Back</a>
+                <a href="/events" class="go-back-link" aria-label="Go back to events list">{{'Back'|_}}</a>
             </nav>
         </div>
         <div class="col-md-3 col-xs-12 center-xs">
@@ -162,7 +162,7 @@ $this['slug'] = $this->param('slug');
                class="btn-primary"
                target="_blank"
                rel="noopener noreferrer"
-               aria-label="View external event page (opens in new window)">View event <i aria-hidden="true"></i></a>
+               aria-label="View external event page (opens in new window)">{{'View event'|_}} <i aria-hidden="true"></i></a>
             {% endif %}
         </div>
 
@@ -175,7 +175,7 @@ $this['slug'] = $this->param('slug');
             </div>
 
             <div class="share_container">
-                <div class="share_label" id="share-label">Share</div>
+                <div class="share_label" id="share-label">{{'Share'|_}}</div>
                 <div class="share_icons" role="group" aria-labelledby="share-label">
                     <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}"
                        target="_blank"

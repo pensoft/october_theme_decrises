@@ -49,8 +49,8 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
 <section class="container tabs_container" role="region" aria-labelledby="partners-heading">
     <h2 id="partners-heading" class="sr-only">Project Partners</h2>
     <div class="tabs" role="tablist" aria-label="Partner view options">
-        <a class="" href="#listView" role="tab" aria-selected="true" aria-controls="listView" id="tab-list">List view</a>
-        <a class="" href="#mapView" role="tab" aria-selected="false" aria-controls="mapView" id="tab-map">Show on map</a>
+        <a class="" href="#listView" role="tab" aria-selected="true" aria-controls="listView" id="tab-list">{{'List view'|_}}</a>
+        <a class="" href="#mapView" role="tab" aria-selected="false" aria-controls="mapView" id="tab-map">{{'Show on map'|_}}</a>
     </div>
 </section>
 
@@ -68,7 +68,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                            href="#partner{{k}}"
                            class="read_more"
                            aria-label="Read more about {{partner.instituion}}"
-                           role="button">Read more</a>
+                           role="button">{{'Read more'|_}}</a>
                     </div>
                 </div>
             </article>
@@ -100,7 +100,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                            class="btn btn-primary"
                                            target="_blank"
                                            rel="noopener noreferrer"
-                                           aria-label="Visit {{partner.instituion}} website (opens in new window)">Visit website</a>
+                                           aria-label="Visit {{partner.instituion}} website (opens in new window)">{{'Visit website'|_}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                             <div class="col-md-7 col-xs-12 partner_detailed_info">
                                 {% if insider_members.getIM(partner.id).count > 0 %}
                                 <section role="region" aria-labelledby="members-heading-{{k}}">
-                                    <h3 id="members-heading-{{k}}">Members</h3>
+                                    <h3 id="members-heading-{{k}}">{{'Members'|_}}</h3>
                                     <div class="partners_list_content">
                                         {% for profile in insider_members.getIM(partner.id) %}
                                         <article class="contact_info row" role="article" aria-labelledby="member-name-{{k}}-{{loop.index}}">
@@ -137,7 +137,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                                        onclick="expandBiography(this);"
                                                        aria-expanded="false"
                                                        aria-controls="bio-{{k}}-{{loop.index}}"
-                                                       aria-label="Read biography of {{ profile.names }}">Read more</p>
+                                                       aria-label="Read biography of {{ profile.names }}">{{'Read more'|_}}</p>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="body"
@@ -193,7 +193,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                        class="btn btn-primary"
                                        target="_blank"
                                        rel="noopener noreferrer"
-                                       aria-label="Visit {{partner.instituion}} website (opens in new window)">Visit website</a>
+                                       aria-label="Visit {{partner.instituion}} website (opens in new window)">{{'Visit website'|_}}</a>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +201,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                         <div class="col-md-7 col-xs-12 partner_detailed_info">
                             {% if insider_members.getIM(partner.id).count > 0 %}
                             <section role="region" aria-labelledby="map-members-heading-{{k}}">
-                                <h3 id="map-members-heading-{{k}}">Members</h3>
+                                <h3 id="map-members-heading-{{k}}">{{'Members'|_}}</h3>
                                 <div class="partners_list_content">
                                     {% for profile in insider_members.getIM(partner.id) %}
                                     <article class="contact_info row" role="article" aria-labelledby="map-member-name-{{k}}-{{loop.index}}">
@@ -230,7 +230,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                                onclick="expandBiography(this);"
                                                aria-expanded="false"
                                                aria-controls="bio-{{k}}-{{loop.index}}"
-                                               aria-label="Read biography of {{ profile.names }}">Read more</p>
+                                               aria-label="Read biography of {{ profile.names }}">{{'Read more'|_}}</p>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="body"
