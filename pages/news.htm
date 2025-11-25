@@ -215,7 +215,7 @@ $this['related'] = $related;
                             <img src="{{ record.cover.path }}" alt="Featured image for: {{ record.title|striptags }}">
                         </a>
                         <div class="news-content news-title">
-                            <time class="news-date" datetime="{{ record.published_at|date('Y-m-d')|_ }}">
+                            <time class="news-date" datetime="{{ record.published_at|date('Y-m-d') }}">
                                 {{record.published_at|date("j")}} {{record.published_at|date("F")|upper|_}} {{record.published_at|date("Y")}}
                             </time>
                             <div class="title">
