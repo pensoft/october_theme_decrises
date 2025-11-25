@@ -76,14 +76,6 @@ $(document).ready(function () {
     headerNavbar.width(innerWidth);
     width100.width(innerWidth);
 
-    $('.nav-item').children("a").each(function () {
-        if ($(this).attr('data-toggle') == 'dropdown') {
-            $(this).removeAttr('data-toggle')
-        }
-    });
-
-    $("nav").removeClass("no-transition");
-
     if (width < 992) { // mobile
         $('#menuToggle input[type="checkbox"]').change(function () {
             var checked = $(this).is(":checked");

@@ -92,7 +92,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
 
                         <div class="row" id="modal-content-{{k}}">
                             <div class="col-md-5 col-xs-12 additiona_image_background">
-                                <img src="{{partner.additional_image.path}}" alt="{{partner.instituion}} detailed image">
+                                <img src="{{partner.background.path}}" alt="{{partner.instituion}} detailed image">
                                 <div class="title_and_link">
                                     <div class="partner_title" id="modal-title-{{k}}">{{partner.instituion}}</div>
                                     <div class="partner_link">
@@ -185,7 +185,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
 
                     <div class="row" id="map-modal-content-{{k}}">
                         <div class="col-md-5 col-xs-12 additiona_image_background">
-                            <img src="{{partner.additional_image.path}}" alt="{{partner.instituion}} detailed image">
+                            <img src="{{partner.background.path}}" alt="{{partner.instituion}} detailed image">
                             <div class="title_and_link">
                                 <div class="partner_title" id="map-modal-title-{{k}}">{{partner.instituion}}</div>
                                 <div class="partner_link">
