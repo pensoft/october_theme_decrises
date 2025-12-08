@@ -42,7 +42,7 @@ function onStart(){
         <div class="col-md-7 col-xs-12">
             <h2 id="vision-heading" class="sr-only">{{'Our Vision'|_}}</h2>
             {% component 'vision' %}
-            <a href="/about" class="btn-primary" aria-label="Learn more about our vision">{{'Learn more'|_}}</a>
+            <a href="/{{currentLang}}/about" class="btn-primary" aria-label="Learn more about our vision">{{'Learn more'|_}}</a>
         </div>
         <div class="col-md-5 col-xs-12 end-md center-xs" data-aos="fade-up">
             <img src="{{'vision.png'|media}}" alt="Illustration representing our vision for multilevel governance and equitable transitions" role="img">
@@ -59,7 +59,7 @@ function onStart(){
         <div class="col-md-7 col-xs-12">
             <h2 id="mission-heading" class="sr-only">{{'Our Mission'|_}}</h2>
             {% component 'mission' %}
-            <a href="/about" class="btn-primary" aria-label="Learn more about us and our mission">{{'About us'|_}}</a>
+            <a href="/{{currentLang}}/about" class="btn-primary" aria-label="Learn more about us and our mission">{{'About us'|_}}</a>
         </div>
     </div>
 </section>

@@ -37,7 +37,7 @@ return Redirect::to('/media-center/policy-briefs');
 ==
 
 <div class="container presentation">
-    <a href="/media-center" class="back-to"> &#10094; Back to Media center</a><br><br>
+    <a href="/{{currentLang}}/media-center" class="back-to"> &#10094; Back to Media center</a><br><br>
     <div class="row">
         {% set records = recordsList %}
         {% set displayColumn = recordsList.displayColumn %}
