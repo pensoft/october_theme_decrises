@@ -167,7 +167,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
 
         {% for k, partner in partners %}
         <div class="control-popup modal fade"
-             id="{{partner.instituion|slug|_({}, 'en')}}"
+             id="inst{{k}}"
              tabindex="-1"
              role="dialog"
              aria-labelledby="map-modal-title-{{k}}"
