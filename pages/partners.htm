@@ -11,26 +11,27 @@ use Pensoft\Cardprofiles\Models\Profiles;
 
 function onStart(){
 	$this['partners'] =  Partners::where('type', 1)->get();
-$this['members'] = Profiles::where('category_id',  2)->get();
+    $this['members'] = Profiles::where('category_id',  2)->get();
 
-$this['insider_members'] = new class {
-public function getIM($id) {
-return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
-}
-};
 
+    $this['insider_members'] = new class {
+
+    public function getIM($id) {
+        return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
+        }
+    };
 }
 
 function onPartners(){
-$this['partners'] = [];
-if(post('code')){
-$this['partners'] =  Partners::whereRaw('country_code ILIKE \'%'.post('code').'%\'')->where('type', 1)->get();
-}
-$this['insider_members'] = new class {
-public function getIM($id) {
-return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
-}
-};
+    $this['partners'] = [];
+    if(post('code')){
+        $this['partners'] =  Partners::whereRaw('country_code ILIKE \'%'.post('code').'%\'')->where('type', 1)->get();
+    }
+    $this['insider_members'] = new class {
+        public function getIM($id) {
+            return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
+        }
+    };
 }
 
 function onSinglePartner(){
@@ -166,7 +167,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
 
         {% for k, partner in partners %}
         <div class="control-popup modal fade"
-             id="{{partner.instituion|slug}}"
+             id="{{partner.instituion|slug|_({}, 'en')}}"
              tabindex="-1"
              role="dialog"
              aria-labelledby="map-modal-title-{{k}}"
