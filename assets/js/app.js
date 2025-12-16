@@ -553,9 +553,10 @@ function init() {
             }
         }
         requestFormLibrary();
-        checkCookie();
 
     });
+
+    checkCookie();
 
 
 
