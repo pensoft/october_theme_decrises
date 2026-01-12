@@ -61,7 +61,8 @@ if($this['entry']['cover_image']){
 }
 $this['page_url'] = $this->pageUrl('');
 
-$this['entries'] = Entry::orderBy('start', 'asc')->paginate(20);
+$this['entries'] = Entry::where('end', '>=', Carbon::now())->orderBy('start', 'asc')->paginate(20);
+$this['past_entries'] = Entry::where('end', '<', Carbon::now())->orderBy('start', 'desc')->get();
 
 $this['slug'] = $this->param('slug');
 
@@ -120,6 +121,50 @@ $this['slug'] = $this->param('slug');
             <nav class="row container" aria-label="Events pagination">
                 {{ entries.fragment('listView').render|raw }}
             </nav>
+            {% endif %}
+
+
+
+
+            {% if past_entries.count > 0 %}
+
+            <section class="events_list_container mb-4" role="region" aria-label="Past Events list">
+                <h2 id="past-events-heading">Past events</h2>
+
+                {% for entry in past_entries %}
+                {% set url = entry.url ?  entry.url : '/events/' ~ entry.slug %}
+                <article class="row entry_item middle-xs" role="article" aria-labelledby="event-title-{{loop.index}}">
+                    <div class="col-md-2 col-xs-12">
+                        <div class="date_container"
+                             {% if entry.cover_image %}
+                             style="background: url({{entry.cover_image.path}}) center no-repeat; background-size: cover;"
+                             role="img"
+                             aria-label="Event cover image for {{entry.title|striptags}}"
+                             {% else %}
+                             role="text"
+                             aria-label="Event date"
+                             {% endif %}
+                        >
+                            <time datetime="{{entry.start|date('Y-m-d')}}">
+                                <span>{{entry.start|date("j M")}}</span>
+                                <span>{{entry.start|date("Y")}}</span>
+                            </time>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-xs-12 body_container">
+                        <h2 id="event-title-{{loop.index}}" class="event-title">
+                            <a href="{{'events'|page}}/{{entry.slug}}" class="date_week" aria-label="View details for {{entry.title|striptags}}">
+                                {{entry.title|raw}}
+                            </a>
+                        </h2>
+                    </div>
+                    <div class="col-md-2 col-xs-12 read-more-events center-md center-xs">
+                        <a href="{{'events'|page}}/{{entry.slug}}" class="read-more" aria-label="Read more about {{entry.title|striptags}}">{{'Read more'|_}}</a>
+                    </div>
+                </article>
+                {% endfor %}
+            </section>
+
             {% endif %}
         </div>
         <div class="row" id="calendarView" role="tabpanel" aria-labelledby="tab-calendar" aria-hidden="true">
