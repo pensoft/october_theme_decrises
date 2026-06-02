@@ -73,9 +73,7 @@ return Response::download($pathToFile, $fileName, $headers);
 {% set records = mediaVideosList %}
 
 <div class="container">
-    <div class="col-xs-12 go-back">
-        <a href="{{'media-center'|page}}"  class="col-xs-12 back-to-news">Back to Media Center</a>
-    </div>
+    
     {% if records.count() %}
     <div class="row full-row">
         {% for record in records %}
@@ -93,9 +91,9 @@ return Response::download($pathToFile, $fileName, $headers);
             </iframe>
 
             {% endif %}
-            <p class="card_title">{{ record.name|length > 65 ? record.name|striptags|slice(0, 65)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.name|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</p>
+            <p class="card_title mt-2">{{ record.name|length > 65 ? record.name|striptags|slice(0, 65)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.name|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</p>
             {% if record.file %}
-            <div class="links">
+            <div class="links mt-2">
                 <div class="button_su">
                     <!--<video controls="" width="100%" height="267"><source src="{{record.file.path}}" type="video/mp4"></video>-->
                     <span class="su_button_circle desplode-circle"></span>
