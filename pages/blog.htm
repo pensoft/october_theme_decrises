@@ -1,0 +1,192 @@
+url = "/blog/:id?|[a-zA-Z\-0-9]"
+layout = "default"
+title = "Blog"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+==
+<?php
+use RainLab\Blog\Models\Post;
+use RainLab\Blog\Models\Category;
+
+function onStart()
+{
+    $slug = $this->param('id');
+
+    // Detail post (only when a slug is present in the URL)
+    $this['post'] = $slug
+        ? Post::isPublished()->where('slug', $slug)->first()
+        : null;
+
+    $this['categories'] = Category::orderBy('name')->get();
+
+    $categoryId = input('categoryId', 'all');
+
+    if ($categoryId !== 'all' && !is_numeric($categoryId)) {
+        return redirect('blog');
+    }
+
+    $this['categoryId'] = $categoryId;
+
+    // Listing (always rendered together with the detail view)
+    $query = Post::isPublished()->orderBy('published_at', 'DESC');
+
+    if ($categoryId !== 'all') {
+        $query->whereHas('categories', function ($q) use ($categoryId) {
+            $q->where('id', $categoryId);
+        });
+    }
+
+    $records = $query->paginate(6);
+
+    if ($categoryId !== 'all') {
+        $records->appends(['categoryId' => $categoryId]);
+    }
+
+    $this['records'] = $records;
+
+    $this['is_detail_page'] = (bool) $this['post'];
+
+    if ($this['is_detail_page']) {
+        $post = $this['post'];
+
+        $this['page_url'] = $this->pageUrl('');
+
+        $seoTitle = $post->title;
+        $seoDescription = str_limit(Html::strip($post->summary ?: $post->content_html), 255);
+
+        if (class_exists('\BennoThommo\Meta\Meta')) {
+            if ($seoTitle) {
+                \BennoThommo\Meta\Meta::set('title', $seoTitle);
+            }
+            if ($seoDescription) {
+                \BennoThommo\Meta\Meta::set('description', $seoDescription);
+            }
+            \BennoThommo\Meta\Meta::set('twitter:card', 'summary_large_image');
+            \BennoThommo\Meta\Meta::set('twitter:title', $seoTitle);
+            \BennoThommo\Meta\Meta::set('twitter:description', $seoDescription);
+            \BennoThommo\Meta\Meta::set('og:title', $seoTitle);
+            \BennoThommo\Meta\Meta::set('og:description', $seoDescription);
+            \BennoThommo\Meta\Meta::set('og:type', 'article');
+            \BennoThommo\Meta\Meta::set('og:url', $this->pageUrl(''));
+
+            $cover = $post->featured_images->first();
+            if ($cover) {
+                \BennoThommo\Meta\Meta::set('twitter:image', $cover->getThumb(600, null, ['mode' => 'auto']));
+                \BennoThommo\Meta\Meta::set('og:image', $cover->getThumb(600, 314, ['mode' => 'crop']));
+                \BennoThommo\Meta\Meta::set('og:image:width', 600);
+                \BennoThommo\Meta\Meta::set('og:image:height', 314);
+            }
+        }
+
+        // Related posts: prefer the same categories, otherwise latest others
+        $categoryIds = $post->categories->pluck('id')->all();
+
+        $related = Post::isPublished()->where('id', '<>', $post->id);
+
+        if (count($categoryIds)) {
+            $related->whereHas('categories', function ($q) use ($categoryIds) {
+                $q->whereIn('id', $categoryIds);
+            });
+        }
+
+        $this['related'] = $related->orderBy('published_at', 'DESC')->limit(3)->get();
+    }
+}
+?>
+==
+
+
+{% if is_detail_page %}
+<div class="single-blog-page">
+    <main class="container single-blog" role="main">
+
+        <nav class="blog-back" aria-label="Breadcrumb">
+            <a href="/{{currentLang}}/blog" aria-label="Back to blog list">
+                <span class="blog-back__icon" aria-hidden="true">
+                    <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 2.5 4 6l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                {{'Back to blog'|_}}
+            </a>
+        </nav>
+
+        <article class="single-blog__article" role="article" aria-labelledby="article-title">
+            {% set cover = post.featured_images.first %}
+            <div class="single-blog__media">
+                <img src="{{ cover ? cover.path : ('blog-image.png'|media) }}" alt="Featured image for: {{ post.title|striptags }}" />
+            </div>
+
+            <time class="single-blog__date" datetime="{{post.published_at|date('Y-m-d')}}">
+                {{post.published_at|date("j")}} {{post.published_at|date("F")|upper|_}} {{post.published_at|date("Y")}}
+            </time>
+
+            <h1 class="single-blog__title" id="article-title">{{post.title}}</h1>
+
+            <hr class="single-blog__divider" />
+
+            {% if post.excerpt %}
+            <div class="single-blog__summary" role="region" aria-label="Summary">
+                <span class="single-blog__label">{{'Summary'|_}}</span>
+                {{post.excerpt|raw}}
+            </div>
+            {% endif %}
+
+            <div class="single-blog__content" role="region" aria-label="Article content">
+                {{post.content_html|raw}}
+            </div>
+
+            {% if post.user %}
+            <div class="single-blog__authors" role="region" aria-label="Authors">
+                <span class="single-blog__label">{{'Authors'|_}}:</span>
+                <div class="author">{{ post.user.first_name }} {{ post.user.last_name }}</div>
+                {% if post.user.email %}
+                <a class="author-email" href="mailto:{{ post.user.email }}">
+                    <svg viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="1" y="2.2" width="16" height="11.6" rx="2.4" stroke="currentColor" stroke-width="1.4"/>
+                        <path d="M2 3.5 9 8.5 16 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ post.user.email }}
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </article>
+
+        {% if related|length %}
+        <section class="related-posts" role="region" aria-labelledby="related-heading">
+            <h2 id="related-heading">{{'Other posts'|_}}</h2>
+            <div class="row">
+                {% for record in related %}
+                <div class="col-md-4 col-xs-12">
+                    {% partial 'blog/card' record=record cover=record.featured_images.first %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+    </main>
+</div>
+
+{% else %}
+
+<main class="container" role="main">
+    <section class="blog-list" id="blog-content" role="region" aria-label="Blog posts">
+        <div class="row">
+            {% for record in records %}
+            <div class="col-md-6 col-xs-12">
+                {% partial 'blog/card' record=record cover=record.featured_images.first %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <nav class="row container blog-pagination" aria-label="Blog pagination">
+            {{ records.render|raw }}
+        </nav>
+    </section>
+</main>
+
+{% endif %}

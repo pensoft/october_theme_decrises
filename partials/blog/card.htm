@@ -1,0 +1,30 @@
+{#
+    Blog listing card — matches the Figma design (node 672:1025 / 672:1026):
+    a rounded cover image with a dark overlay and a light info box anchored to
+    the bottom-left containing the date, title and a "Read more" link.
+
+    Expects:
+      record — RainLab\Blog\Models\Post
+      cover  — the post's first featured image (or null)
+#}
+<article class="blog-card">
+    <a class="blog-card__image" href="/blog/{{ record.slug }}" aria-label="Read full post: {{ record.title|striptags }}">
+        <img src="{{ cover ? cover.path : ('blog-image.png'|media) }}" alt="Featured image for: {{ record.title|striptags }}">
+    </a>
+    <div class="blog-card__body">
+        <time class="blog-card__date" datetime="{{ record.published_at|date('Y-m-d') }}">
+            {{record.published_at|date("j")}} {{record.published_at|date("F")|upper|_}} {{record.published_at|date("Y")}}
+        </time>
+        <h3 class="blog-card__title">
+            <a href="/blog/{{ record.slug }}">
+                {{ record.title|length > 70 ? record.title|striptags|slice(0, 70)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.title|striptags|replace({"&nbsp;": " ", ".": ". "}) }}
+            </a>
+        </h3>
+        <a class="blog-read-more" href="/blog/{{ record.slug }}" aria-label="Read full post: {{ record.title|striptags }}">
+            {{ 'Read more'|_ }}
+            <svg viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+    </div>
+</article>
