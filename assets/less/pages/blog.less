@@ -332,6 +332,17 @@
         &__authors{
             margin-top: 40px;
 
+            .author-item{
+                display: inline-flex;
+                flex-direction: column;
+                vertical-align: top;
+                gap: 8px;
+
+                & + .author-item{
+                    margin-left: 24px;
+                }
+            }
+
             .author{
                 color: @heading-text-color;
                 font-size: 18px;
@@ -348,7 +359,6 @@
                 font-size: 18px;
                 line-height: 1.4;
                 letter-spacing: -0.54px;
-                margin-top: 8px;
 
                 svg{
                     width: 17px;
