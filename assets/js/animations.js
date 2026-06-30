@@ -100,7 +100,7 @@ function animateSubtitleWords(element, delay) {
             );
 
             const wordContent = $(
-                `<span class="subtitle-word-content" style="
+                `<span class="subtitle-word-content" style=" text-transform: capitalize;
                     display: block; /* Important for transform */
                     transform: translateY(100%); /* Start at edge of mask */
                     transition: transform ${delay}s ease-out; /* Slower, softer easing */
