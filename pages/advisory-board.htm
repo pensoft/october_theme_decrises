@@ -1,0 +1,185 @@
+url = "/advisory-board"
+layout = "default"
+title = "Advisory Board"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+
+==
+<?php
+use Pensoft\Cardprofiles\Models\Profiles;
+
+function onStart()
+{
+	$this['profiles'] = Profiles::where('category_id', 3)
+		->orderBy('sort_order')
+->get();
+}
+?>
+==
+{% component 'siteSearchInclude' %}
+<main id="main-content" role="main">
+    <div class="container">
+        <h1 class="advisory-board__title sr-only">{{ this.page.title }}</h1>
+
+        <div class="advisory-board__grid">
+            {% for profile in profiles %}
+            <article class="advisory-card">
+                <div class="advisory-card__image">
+                    <img src="{% if profile.avatar %}{{ profile.avatar.thumb(472, 472, {'mode': 'crop'}) }}{% else %}{{ 'avatar.svg'|media }}{% endif %}"
+                         alt="{{ profile.names }}" loading="lazy">
+                </div>
+
+                <div class="advisory-card__info">
+                    <h2 class="advisory-card__name">{{ profile.names }}</h2>
+                    {% if profile.position %}
+                    <p class="advisory-card__position">{{ profile.position }}</p>
+                    {% endif %}
+                </div>
+
+                {% if profile.content %}
+                <a
+                        class="advisory-card__biography js-biography-open"
+                        data-biography-target="biography-{{ profile.id }}"
+                        aria-haspopup="dialog"
+                        href="#">
+                    <span>Biography</span>
+                </a>
+
+                <template id="biography-{{ profile.id }}"
+                          data-name="{{ profile.names }}"
+                          data-position="{{ profile.position }}"
+                          data-avatar="{% if profile.avatar %}{{ profile.avatar.thumb(200, 200, {'mode': 'crop'}) }}{% else %}{{ 'avatar.svg'|media }}{% endif %}">{{ profile.content|raw }}</template>
+                {% endif %}
+            </article>
+            {% else %}
+            <p class="advisory-board__empty">No advisory board members to display.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="biography_modal" id="biographyModal" hidden>
+        <div class="biography_modal_overlay js-biography-close"></div>
+        <div class="biography_modal_dialog" role="dialog" aria-modal="true" aria-labelledby="biographyModalName">
+            <button type="button" class="biography_modal_close js-biography-close" aria-label="Close dialog">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="M16.3887 0.290956L9.00094 7.67954L1.61314 0.290956C1.43545 0.128339 1.20188 0.0405543 0.961087 0.0458903C0.72029 0.0512262 0.490836 0.149271 0.320525 0.3196C0.150215 0.489929 0.0521799 0.719407 0.0468446 0.96023C0.0415092 1.20105 0.129284 1.43465 0.291884 1.61235L7.67593 9.00094L0.29001 16.3876C0.199776 16.4736 0.127643 16.5768 0.0778516 16.6911C0.0280603 16.8054 0.00161536 16.9285 7.17197e-05 17.0531C-0.00147192 17.1778 0.0219169 17.3015 0.0688628 17.417C0.115809 17.5324 0.185364 17.6374 0.273442 17.7256C0.361519 17.8138 0.46634 17.8835 0.581743 17.9306C0.697146 17.9777 0.820803 18.0013 0.945444 17.9999C1.07008 17.9986 1.19319 17.9723 1.30754 17.9227C1.42188 17.873 1.52515 17.801 1.61127 17.7109L9.00094 10.3242L16.3887 17.7128C16.5664 17.8754 16.8 17.9632 17.0408 17.9579C17.2816 17.9525 17.511 17.8545 17.6813 17.6842C17.8517 17.5138 17.9497 17.2843 17.955 17.0435C17.9604 16.8027 17.8726 16.5691 17.71 16.3914L10.3222 9.00281L17.71 1.61235C17.8002 1.52635 17.8724 1.42318 17.9221 1.30889C17.9719 1.19461 17.9984 1.07152 17.9999 0.94687C18.0015 0.822218 17.9781 0.698515 17.9311 0.583033C17.8842 0.467551 17.8146 0.36262 17.7266 0.274408C17.6385 0.186196 17.5337 0.116484 17.4183 0.0693699C17.3029 0.0222553 17.1792 -0.00131087 17.0546 5.62491e-05C16.9299 0.00142337 16.8068 0.0276964 16.6925 0.077331C16.5781 0.126966 16.4749 0.19896 16.3887 0.289082V0.290956Z" fill="currentColor"/>
+                </svg>
+            </button>
+
+            <div class="biography_modal_header">
+                <div class="biography_modal_image">
+                    <img src="" alt="" class="biography_modal_avatar">
+                </div>
+
+                <div class="biography_modal_identity">
+                    <h2 class="biography_modal_name" id="biographyModalName"></h2>
+                    <p class="biography_modal_position"></p>
+                </div>
+            </div>
+
+            <p class="biography_modal_label">Biography</p>
+
+            <div class="biography_modal_content"></div>
+        </div>
+    </div>
+</main>
+
+<script>
+    (function () {
+        var modal = document.getElementById('biographyModal');
+
+        if (!modal) {
+            return;
+        }
+
+        var dialog = modal.querySelector('.biography_modal_dialog');
+        var nameEl = modal.querySelector('.biography_modal_name');
+        var positionEl = modal.querySelector('.biography_modal_position');
+        var avatarEl = modal.querySelector('.biography_modal_avatar');
+        var contentEl = modal.querySelector('.biography_modal_content');
+        var closeBtn = modal.querySelector('.biography_modal_close');
+        var lastFocused = null;
+
+        function openModal(trigger) {
+            var source = document.getElementById(trigger.getAttribute('data-biography-target'));
+
+            if (!source) {
+                return;
+            }
+
+            lastFocused = trigger;
+
+            var name = source.getAttribute('data-name') || '';
+            nameEl.textContent = name;
+
+            avatarEl.src = source.getAttribute('data-avatar') || '';
+            avatarEl.alt = name;
+
+            var position = source.getAttribute('data-position') || '';
+            positionEl.textContent = position;
+            positionEl.hidden = !position;
+
+            contentEl.innerHTML = '';
+            contentEl.appendChild(source.content.cloneNode(true));
+            contentEl.scrollTop = 0;
+
+            modal.hidden = false;
+            document.body.classList.add('biography-modal-open');
+            closeBtn.focus();
+        }
+
+        function closeModal() {
+            modal.hidden = true;
+            document.body.classList.remove('biography-modal-open');
+            contentEl.innerHTML = '';
+
+            if (lastFocused) {
+                lastFocused.focus();
+                lastFocused = null;
+            }
+        }
+
+        document.querySelectorAll('.js-biography-open').forEach(function (trigger) {
+            trigger.addEventListener('click', function () {
+                openModal(trigger);
+            });
+        });
+
+        modal.querySelectorAll('.js-biography-close').forEach(function (el) {
+            el.addEventListener('click', closeModal);
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && !modal.hidden) {
+                closeModal();
+            }
+        });
+
+        // Keep focus inside the dialog while it is open.
+        dialog.addEventListener('keydown', function (event) {
+            if (event.key !== 'Tab') {
+                return;
+            }
+
+            var focusable = dialog.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+
+            if (!focusable.length) {
+                return;
+            }
+
+            var first = focusable[0];
+            var last = focusable[focusable.length - 1];
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        });
+    })();
+</script>
