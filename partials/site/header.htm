@@ -47,6 +47,43 @@ function onSwitchLocale(){
     <div class="navbar-collapse collapse center-xs" id="headerNavbarNav" role="menu" aria-hidden="true" style="display: none;">
         {% component 'menu' %}
     </div>
+    <div class="search-and-social-media">
+        <ul class="navbar-nav" role="list">
+            <li class="nav-item social">
+                <a class="search-btn" onclick="showSearchForm();" aria-label="Open search" aria-expanded="false" aria-controls="search" role="button" tabindex="0">
+                    <svg width="21" height="21" viewBox="0 0 21.5 21.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <path d="M16.3055 16.3056L20.75 20.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18.5278 9.63889C18.5278 4.72969 14.5481 0.75 9.63889 0.75C4.72969 0.75 0.75 4.72969 0.75 9.63889C0.75 14.5481 4.72969 18.5278 9.63889 18.5278C14.5481 18.5278 18.5278 14.5481 18.5278 9.63889Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="sr-only">Search</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a class="mobile-search-btn" onclick="showSearchForm();" aria-label="Open search" aria-expanded="false" aria-controls="search" role="button" tabindex="0">
+        <svg width="22" height="22" viewBox="0 0 21.5 21.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <path d="M16.3055 16.3056L20.75 20.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M18.5278 9.63889C18.5278 4.72969 14.5481 0.75 9.63889 0.75C4.72969 0.75 0.75 4.72969 0.75 9.63889C0.75 14.5481 4.72969 18.5278 9.63889 18.5278C14.5481 18.5278 18.5278 14.5481 18.5278 9.63889Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="sr-only">Search</span>
+    </a>
+
+    <div id="search" class="search" role="search" aria-label="Site search" style="display: none;">
+        <div class="container">
+            <a class="close-search" onclick="hideSearchForm();" aria-label="Close search">
+                <span aria-hidden="true">&#10006;</span>
+                <span class="sr-only">Close</span>
+            </a>
+            <form class="input-group align-items-start" action="{{ url('search')}}" method="get">
+                <label for="search-input" class="sr-only">Search</label>
+                <input class="form-control search_input" id="search-input" style="color: #000;" name="q" type="text" autocomplete="on" placeholder="Search" aria-label="Search query">
+                <button class="btn btn-link pr p-search big text-grey-search-btn" type="submit" aria-label="Submit search">
+                    <span class="sr-only">Search</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
 <!--    <div id="google_translate_element" aria-label="Google Translate"></div>-->
 
@@ -59,9 +96,9 @@ function onSwitchLocale(){
 </nav>
 
 <main id="main-content" role="main">
-    {% if this.theme.header_image and page_id != 'search' %}
+    {% if this.theme.header_image %}
     <header class="header-image {{page_id}}" role="banner">
-        {% if page_id != 'search' %}
+
         {% if page_id == 'home' %}
         <div class="header-image-bar" style="background-image: url('{{this.theme.header_image.getPath()}}'); background-position: left center;" role="img" aria-label="Header background image">
             <div class="container jumbotron">
@@ -87,14 +124,13 @@ function onSwitchLocale(){
         {% else %}
         <div class="header-image-bar" style="background-image: url('{{this.theme.header_image.getPath()}}'); background-position: left center;" role="img" aria-label="Page header background image">
             <div class="jumbotron hero">
-                {% if page_id != 'home' and page_id != 'search' %}
+                {% if page_id != 'home' %}
                 <h1 class="underline white" id="page-title">
                     {%if page_title%} {{page_title|_}} {%else%} {{site_name|_}} {%endif%}
                 </h1>
                 {%endif%}
             </div>
         </div>
-        {%endif%}
         {%endif%}
     </header>
     {% endif %}

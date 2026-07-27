@@ -263,8 +263,21 @@
         order: 1;
     }
     .search-and-social-media{
+        // Sit just to the left of the language pill (.custom-select is absolute at left: 90%).
+        position: absolute;
+        top: 42px;
+        right: calc(~"10% + 30px");
+        transform: translateY(-50%);
+        z-index: 2;
+
+        // Desktop only. On mobile the dedicated .mobile-search-btn (next to the hamburger) is used instead.
+        .breakpoint-large-down({
+            display: none;
+        });
+
         ul{
             padding: 0 0px!important;
+            margin: 0;
         }
         min-width: fit-content;
         .sign-in a {
@@ -281,6 +294,132 @@
                 display: inline-flex;
                 align-items: center;
                 justify-content: space-between;
+            }
+        }
+
+        .search-btn{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 21px;
+            height: 21px;
+            color: @white-color;
+            cursor: pointer;
+            transition: opacity 0.3s ease-in-out;
+
+            svg{
+                width: 21px;
+                height: 21px;
+                display: block;
+            }
+
+            &:hover,
+            &:focus-visible{
+                opacity: 0.6;
+            }
+        }
+    }
+
+    // Dedicated mobile search trigger — a plain element (not inside .navbar-nav, so the
+    // global `.navbar-nav { visibility: hidden }` mobile rule can't touch it). Hidden on desktop.
+    .mobile-search-btn{
+        display: none;
+        .breakpoint-large-down({
+            display: flex;
+        });
+    }
+
+    // Expanding search bar that overlays the navbar row when the icon is clicked.
+    #search.search{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        z-index: 10000;
+        padding: 0 60px;
+        box-sizing: border-box;
+        background: rgba(5, 18, 31, 0.92);
+        backdrop-filter: blur(6px);
+
+        .breakpoint-large-down({
+            padding: 0 24px;
+        });
+
+        .container{
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            width: 100%;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        form.input-group{
+            order: 1;
+            flex: 1 1 auto;
+            position: relative;
+        }
+
+        .search_input{
+            width: 100%;
+            height: 52px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: @white-color;
+            padding: 0 52px 0 20px;
+            font-size: 16px;
+            color: #000 !important;
+            box-sizing: border-box;
+
+            &::placeholder{
+                color: #8D97A5;
+                opacity: 1;
+            }
+
+            &:focus{
+                border-color: @link-color;
+            }
+        }
+
+        // Submit button (magnifier) docked inside the input on the right.
+        .btn.p-search{
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0 !important;
+            color: @grey-btn-search-color; // variable already carries !important
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+
+            &:hover{
+                opacity: 0.6;
+            }
+        }
+
+        .close-search{
+            order: 2;
+            flex-shrink: 0;
+            color: @white-color;
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+            transition: opacity 0.3s ease-in-out;
+
+            &:hover{
+                opacity: 0.6;
             }
         }
     }
@@ -412,6 +551,32 @@
 }
 
 @media (max-width:1000px) {
+
+    /* Mobile search icon: sits in the clear gap between the logo and the language pill. */
+    .mobile-search-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 38px;
+        right: calc(~"37% + 24px");
+        width: 28px;
+        height: 28px;
+        color: #ffffff;
+        z-index: 30;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+
+        svg {
+            width: 22px;
+            height: 22px;
+            display: block;
+        }
+
+        &:active {
+            opacity: 0.6;
+        }
+    }
 
     /* menu toggle effect mobile */
 

@@ -478,14 +478,14 @@ function isBreakpointLarge() {
 function showSearchForm() {
     $('#layout-header').toggleClass('full-width');
     $('#search').toggle();
-    $('.navbar a.p-search').css('visibility', 'hidden');
+    $('.navbar a.search-btn').css('visibility', 'hidden');
     $('#menu li').hide();
 }
 
 function hideSearchForm() {
     $('#layout-header').toggleClass('full-width');
     $('#search').hide();
-    $('.navbar a.p-search').css('visibility', 'visible');
+    $('.navbar a.search-btn').css('visibility', 'visible');
     $('#menu li').show();
 }
 
