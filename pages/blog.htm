@@ -4,7 +4,6 @@ title = "Blog"
 is_hidden = 0
 robot_index = "index"
 robot_follow = "follow"
-
 ==
 <?php
 use RainLab\Blog\Models\Post;
@@ -96,8 +95,6 @@ function onStart()
 }
 ?>
 ==
-
-
 {% if is_detail_page %}
 <div class="single-blog-page">
     <main class="container single-blog" role="main">
@@ -125,19 +122,6 @@ function onStart()
 
             <h1 class="single-blog__title" id="article-title">{{post.title}}</h1>
 
-            <hr class="single-blog__divider" />
-
-            {% if post.excerpt %}
-            <div class="single-blog__summary" role="region" aria-label="Summary">
-                <span class="single-blog__label">{{'Summary'|_}}</span>
-                {{post.excerpt|raw}}
-            </div>
-            {% endif %}
-
-            <div class="single-blog__content" role="region" aria-label="Article content">
-                {{post.content_html|raw}}
-            </div>
-
             {% if post.categories|length %}
             <div class="single-blog__authors" role="region" aria-label="Authors">
                 <span class="single-blog__label">{{'Authors'|_}}:</span>
@@ -157,6 +141,21 @@ function onStart()
                 {% endfor %}
             </div>
             {% endif %}
+
+            <p>&nbsp;</p>
+
+            {% if post.excerpt %}
+            <div class="single-blog__summary" role="region" aria-label="Summary">
+                <span class="single-blog__label">{{'Summary'|_}}</span>
+                {{post.excerpt|raw}}
+            </div>
+            {% endif %}
+
+            <div class="single-blog__content" role="region" aria-label="Article content">
+                {{post.content_html|raw}}
+            </div>
+
+            
         </article>
 
         {% if related|length %}
