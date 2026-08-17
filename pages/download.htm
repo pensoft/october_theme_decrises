@@ -1,0 +1,77 @@
+title = "File download"
+url = "/download/:id/:name?"
+is_hidden = 0
+robot_index = "noindex"
+robot_follow = "nofollow"
+==
+<?php
+use System\Models\File;
+
+/**
+ * Serves a public file attachment behind a URL that carries the ORIGINAL file
+ * name instead of the hashed disk name, e.g.
+ *
+ *   /download/482/decrises-policy-brief.pdf
+ *
+ * instead of
+ *
+ *   /storage/app/uploads/public/5f4/6a1/0c2/5f46a10c2f31....pdf
+ *
+ * Matomo builds its "Downloads" report from the link href, so the pretty URL
+ * is what makes the real file name show up there. The :name segment is
+ * cosmetic - the file is always resolved by :id - so links keep working when
+ * an editor renames the record afterwards.
+ *
+ * Links are built with the "components/download-url" partial, never by hand.
+ */
+function onStart()
+{
+	$id = (int) $this->param('id');
+
+	$file = $id ? File::find($id) : null;
+
+	/*
+	 * Only public attachments may pass through here. Protected files keep
+	 * going through the backend Files controller, which does its own auth.
+	 */
+	if (!$file || !$file->isPublic()) {
+		abort(404);
+	}
+
+	$localPath = $file->getLocalPath();
+
+	if (!$localPath || !file_exists($localPath)) {
+		abort(404);
+	}
+
+	$headers = [];
+
+	if ($contentType = $file->getContentType()) {
+		$headers['Content-Type'] = $contentType;
+	}
+
+	// The disk name is a hash, so the bytes behind an id never change.
+	$headers['Cache-Control'] = 'public, max-age=86400';
+
+	$response = Response::file($localPath, $headers);
+
+	/*
+	 * Symfony rejects slashes in the file name, and needs an ASCII fallback
+	 * for user agents that cannot read the RFC 5987 "filename*" form.
+	 */
+	$fileName = str_replace(['/', '\\'], '-', $file->file_name);
+	$fallback = preg_replace('/[^\x20-\x7e]/', '_', Str::ascii($fileName));
+	$fallback = str_replace(['%', '/', '\\'], '_', $fallback) ?: 'download';
+
+	/*
+	 * "inline" keeps the current behaviour: the browser renders what it can
+	 * (PDFs, images) and downloads the rest. Either way the name it offers in
+	 * the save dialog is now the original one, and anchors carrying a
+	 * download="..." attribute still force a save.
+	 */
+	$response->setContentDisposition('inline', $fileName, $fallback);
+
+	return $response;
+}
+?>
+==

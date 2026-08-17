@@ -87,7 +87,7 @@ return Response::download($pathToFile, $fileName, $headers);
                             {% if record.file %}
                             <div class="button_su">
                                 <span class="su_button_circle desplode-circle"></span>
-                                <a href="{{record.file.path}}" download="{{record.file.file_name}}" class="btn btn-slide-plain dwn-btn"><span class="button_text_container"><i class="pr normal p-download"></i>Download</span></a>
+                                <a href="{{ partial('components/download-url', { file: record.file, name: record.name }) }}" download="{{record.file.file_name}}" class="btn btn-slide-plain dwn-btn"><span class="button_text_container"><i class="pr normal p-download"></i>Download</span></a>
                             </div>
                             {% endif %}
                         </div>

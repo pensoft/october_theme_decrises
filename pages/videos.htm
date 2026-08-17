@@ -97,7 +97,7 @@ return Response::download($pathToFile, $fileName, $headers);
                 <div class="button_su">
                     <!--<video controls="" width="100%" height="267"><source src="{{record.file.path}}" type="video/mp4"></video>-->
                     <span class="su_button_circle desplode-circle"></span>
-                    <a class="button_su_inner" href="{{ ''| page }}?{{queries}}&download={{record.file.id}}&file_name={{record.name|replace({' ': '_'})}}"><span class="button_text_container"><i class="pr normal p-download"></i>Download</span></a>
+                    <a class="button_su_inner" href="{{ partial('components/download-url', { file: record.file, name: record.name }) }}" download="{{record.file.file_name}}"><span class="button_text_container"><i class="pr normal p-download"></i>Download</span></a>
                 </div>
             </div>
             {% endif %}
