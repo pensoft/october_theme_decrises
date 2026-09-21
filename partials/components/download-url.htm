@@ -4,6 +4,11 @@
     when it registers a download, so this is what makes the "Downloads" report
     readable.
 
+    For files the THEME serves - the Media centre. Publications are attached to
+    a Pensoft.Library model and are linked with that plugin's own download_url()
+    function, which routes them through the plugin instead; see pages/download.htm
+    for why the two cannot share a prefix.
+
     Renders nothing but the URL, so it is meant to be used inside an attribute:
 
         <a href="{{ partial('components/download-url', { file: record.file }) }}">

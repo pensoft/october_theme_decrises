@@ -1,5 +1,5 @@
 title = "File download"
-url = "/download/:id/:name?"
+url = "/media-file/:id/:name?"
 is_hidden = 0
 robot_index = "noindex"
 robot_follow = "nofollow"
@@ -11,11 +11,20 @@ use System\Models\File;
  * Serves a public file attachment behind a URL that carries the ORIGINAL file
  * name instead of the hashed disk name, e.g.
  *
- *   /download/482/decrises-policy-brief.pdf
+ *   /media-file/482/decrises-policy-brief.pdf
  *
  * instead of
  *
  *   /storage/app/uploads/public/5f4/6a1/0c2/5f46a10c2f31....pdf
+ *
+ * The prefix is "media-file", not "download": Pensoft.Library registers a
+ * Laravel route on /download/{id}/{name?}, and plugin routes are matched
+ * before the CMS catch-all, so anything served from here under that prefix is
+ * unreachable. That plugin route only serves attachments on the allow-list in
+ * its own config, which is why Media centre files 404'd while publications
+ * kept working. Publications still go through it - they link with the
+ * plugin's own download_url() Twig function - and everything the theme owns
+ * comes through this page instead.
  *
  * Matomo builds its "Downloads" report from the link href, so the pretty URL
  * is what makes the real file name show up there. The :name segment is
