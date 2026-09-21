@@ -1,0 +1,91 @@
+url = "/synergies"
+layout = "default"
+title = "Synergies"
+is_hidden = 0
+meta_description = "Projects and initiatives DeCrises collaborates with."
+seo_keywords = "synergies, sister projects, collaboration, DeCrises"
+robot_index = "index"
+robot_follow = "follow"
+
+[siteSearchInclude]
+==
+<?php
+use Pensoft\Synergies\Models\Synergy;
+
+function onStart()
+{
+	// Pensoft.Synergies registers no front-end component (Plugin.php returns an
+	// empty component list), so the records are read straight from the model -
+	// the same approach about.htm and advisory-board.htm take.
+	//
+	// Ordered by sort_order like advisory-board.htm. That column is not exposed
+	// in the model's fields.yaml and defaults to 1 for every record, so name is
+	// the tie-breaker - without it the grid falls back to whatever order MySQL
+	// happens to return.
+	$this['synergies'] = Synergy::orderBy('sort_order')
+		->orderBy('name')
+		->get();
+}
+?>
+==
+{% component 'siteSearchInclude' %}
+
+{#
+    The hero in partials/site/header.htm already renders "Synergies" as the
+    page-level <h1>, so this section carries a visually hidden heading of its
+    own rather than opening a second one (WCAG 1.3.1).
+#}
+<section class="synergies_projects" aria-labelledby="synergies-heading">
+    <h2 id="synergies-heading" class="visually-hidden">{{'Related projects'|_}}</h2>
+
+    <div class="container">
+        {% if synergies|length %}
+        <ul class="synergies-grid">
+            {% for synergy in synergies %}
+            <li>
+                {#
+                    The card is a plain <div>, not a link: the description panel
+                    carries its own "Visit website" link and a link inside a link
+                    is invalid. The panel is revealed on :hover and on
+                    :focus-within, so tabbing to that link brings it into view
+                    instead of moving focus to something clipped out of sight.
+                #}
+                <div class="synergy-card">
+                    <div class="synergy-card__logo">
+                        {% if synergy.logo %}
+                        <img src="{{ synergy.logo.path }}" alt="{{ synergy.name }}" loading="lazy">
+                        {% else %}
+                        <span class="synergy-card__name">{{ synergy.name }}</span>
+                        {% endif %}
+                    </div>
+
+                    {% if synergy.description or synergy.url %}
+                    <div class="synergy-card__overlay">
+                        {% if synergy.description %}
+                        <div class="synergy-card__description">{{ synergy.description|ensure_img_alt|raw }}</div>
+                        {% endif %}
+
+                        {% if synergy.url %}
+                        {#
+                            Every card repeats the words "Visit website", so the
+                            project name rides along in an sr-only span - a list
+                            of identical link names is useless when navigating by
+                            links alone.
+                        #}
+                        <a class="synergy-card__link" href="{{ synergy.url }}" target="_blank" rel="noopener">
+                            {{'Visit website'|_}}<span class="sr-only"> - {{ synergy.name }}</span>
+                            <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                <path d="M1.25 1.25L6.5 6.5L1.25 11.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            {% partial 'components/new-tab-hint' %}
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</section>

@@ -123,21 +123,22 @@ $this['related'] = $related;
 
 
 {% if is_detail_page %}
-<main class="container" role="main">
+{# The single <main> is the layout's #layout-content. #}
+<div class="container">
     <div class="row">
         <div class="col-md-12 col-xs-12 mb-2">
-            <nav aria-label="Breadcrumb">
-                <a href="/{{currentLang}}/news" class="go-back-link" aria-label="Go back to news list">{{'Back'|_}}</a>
+            <nav aria-label="{{'Breadcrumb'|_}}">
+                <a href="/{{currentLang}}/news" class="go-back-link" aria-label="{{'Back to the news list'|_}}">{{'Back'|_}}</a>
             </nav>
         </div>
 
-        <article class="row single-news-item" role="article" aria-labelledby="article-title">
+        <article class="row single-news-item" aria-labelledby="article-title">
             <div class="col-md-5 col-xs-12 sticked_image">
                 {% if article.cover %}
                 <img src="{{ article.cover.path }}" alt="Featured image for: {{ article.title|striptags }}" />
                 {% endif %}
                 {% if article.caption %}
-                <div class="caption" role="text">{{article.caption|raw}}</div>
+                <div class="caption">{{article.caption|raw}}</div>
                 {% endif %}
 
                 <div class="row middle-xs">
@@ -170,52 +171,55 @@ $this['related'] = $related;
 
                 <h1 class="single-new-title" id="article-title">{{article.title}}</h1>
 
-                <div class="content" role="region" aria-label="Article content">
+                <div class="content">
                     {{article.content|raw}}
                 </div>
             </div>
         </article>
 
-        <section class="col-md-12 col-xs-12 related-articles-container" role="region" aria-labelledby="related-heading">
+        <section class="col-md-12 col-xs-12 related-articles-container" aria-labelledby="related-heading">
             <h2 id="related-heading">{{'Other news'|_}}</h2>
             {% partial 'relatedarticles' related=related %}
         </section>
     </div>
-</main>
+</div>
 
 {% else %}
 
-<main class="container" role="main">
+<div class="container">
     <div class="category-tabs-container mb-2">
         {% if categories.count > 0 %}
-        <nav class="row category-tabs" id="category-tabs" role="navigation" aria-label="News categories">
+        {#
+            These are ordinary links that reload the page with a different
+            query string, not an ARIA tab widget - role="tab" without a
+            tablist/tabpanel relationship (and without arrow-key handling)
+            misreports the control. aria-current marks the active filter.
+        #}
+        <nav class="row category-tabs" id="category-tabs" aria-label="{{'News categories'|_}}">
             <a href="{{ 'news'|page }}"
                class="{{ 'all' == categoryId ? 'active' : '' }}"
-               role="tab"
-               aria-selected="{{ 'all' == categoryId ? 'true' : 'false' }}"
-               aria-controls="news-content">All News</a>
+               {% if 'all' == categoryId %}aria-current="page"{% endif %}>{{'All News'|_}}</a>
             {% for category in categories %}
             <a href="{{ 'news'|page }}?categoryId={{ category.id }}"
                class="{{ category.id == categoryId ? 'active' : '' }}"
-               role="tab"
-               aria-selected="{{ category.id == categoryId ? 'true' : 'false' }}"
-               aria-controls="news-content">{{ category.name }}</a>
+               {% if category.id == categoryId %}aria-current="page"{% endif %}>{{ category.name }}</a>
             {% endfor %}
         </nav>
         {% endif %}
     </div>
 
-    <section class="news-list" id="news-content" role="region" aria-label="News articles">
+    <section class="news-list" id="news-content" aria-labelledby="news-list-heading">
+        <h2 id="news-list-heading" class="visually-hidden">{{'News articles'|_}}</h2>
         <div class="row">
             {% for record in records %}
             <div class="col-md-4 col-xs-12 highlight-news">
-                <article class="row news-card" role="article" aria-labelledby="news-title-{{loop.index}}">
+                <article class="row news-card" aria-labelledby="news-title-{{loop.index}}">
                     <div class="img-container">
-                        <a href="{{'news'|page}}/{{record.slug}}" aria-label="Read full article: {{ record.title|striptags }}">
-                            <img src="{{ record.cover.path }}" alt="Featured image for: {{ record.title|striptags }}">
+                        <a href="{{'news'|page}}/{{record.slug}}" tabindex="-1" aria-hidden="true">
+                            <img src="{{ record.cover.path }}" alt="">
                         </a>
                         <div class="news-content news-title">
-                            <time class="news-date" datetime="{{ record.published_at|date('Y-m-d') }}">
+                            <time class="news-date" id="news-date-{{loop.index}}" datetime="{{ record.published_at|date('Y-m-d') }}">
                                 {{record.published_at|date("j")}} {{record.published_at|date("F")|upper|_}} {{record.published_at|date("Y")}}
                             </time>
                             <div class="title">
@@ -232,10 +236,10 @@ $this['related'] = $related;
             {% endfor %}
         </div>
 
-        <nav class="row container" aria-label="News pagination">
+        <nav class="row container" aria-label="{{'News pagination'|_}}">
             {{ records.render|raw }}
         </nav>
     </section>
-</main>
+</div>
 
 {% endif %}

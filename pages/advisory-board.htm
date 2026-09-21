@@ -20,9 +20,8 @@ function onStart()
 ?>
 ==
 {% component 'siteSearchInclude' %}
-<main id="main-content" role="main">
+<div class="advisory-board">
     <div class="container">
-        <h1 class="advisory-board__title sr-only">{{ this.page.title }}</h1>
 
         <div class="advisory-board__grid">
             {% for profile in profiles %}
@@ -40,13 +39,14 @@ function onStart()
                 </div>
 
                 {% if profile.content %}
-                <a
+                <button
+                        type="button"
                         class="advisory-card__biography js-biography-open"
                         data-biography-target="biography-{{ profile.id }}"
                         aria-haspopup="dialog"
-                        href="#">
-                    <span>Biography</span>
-                </a>
+                        aria-label="{{'Biography'|_}}: {{ profile.names }}">
+                    <span>{{'Biography'|_}}</span>
+                </button>
 
                 <template id="biography-{{ profile.id }}"
                           data-name="{{ profile.names }}"
@@ -85,7 +85,7 @@ function onStart()
             <div class="biography_modal_content"></div>
         </div>
     </div>
-</main>
+</div>
 
 <script>
     (function () {

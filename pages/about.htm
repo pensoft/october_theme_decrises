@@ -46,19 +46,25 @@ function onStart(){
         </div>
         <div class="col-md-6 col-xs-12 end-md center-xs" data-aos="fade-up">
             <img src="{{'about.png'|media}}"
-                 alt="Illustration representing the DeCrises project's approach to democratic governance and multilevel collaboration"
-                 role="img"></div>
+                 alt="Illustration representing the DeCrises project's approach to democratic governance and multilevel collaboration"></div>
     </div>
 </div>
 
-<section class="container objectives" role="region" aria-labelledby="objectives-heading">
+{#
+    The headings inside these components are authored in the CMS, so the
+    sections carry their own name here instead of pointing aria-labelledby at
+    ids that are never rendered.
+#}
+<section class="container objectives" aria-labelledby="objectives-heading">
+    <h2 id="objectives-heading" class="visually-hidden">{{'Project objectives'|_}}</h2>
 
     {% component 'objectives' %}
 
 </section>
 
 
-<section class="container-fluid about_bottom_section" role="region" aria-labelledby="mission-statement">
+<section class="container-fluid about_bottom_section" aria-labelledby="about-summary-heading">
+    <h2 id="about-summary-heading" class="visually-hidden">{{'About the project'|_}}</h2>
     {% component 'bottom_section' %}
 </section>
 

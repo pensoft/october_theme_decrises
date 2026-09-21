@@ -12,10 +12,11 @@
 </div>
 <div style="clear: both;"></div>
 <p>
-	<a href="javascript:;" data-request="onDownloadHandler" data-request-data="files:  {{images}}" target="_blank" class="download-icon">Download all</a>
+	{# Buttons, not empty anchors: neither control navigates anywhere. #}
+	<button type="button" data-request="onDownloadHandler" data-request-data="files:  {{images}}" class="link-button download-icon">Download all images</button>
 	{% if images.count > 7 %}
 	&nbsp;&nbsp;&nbsp;
-	<a href="javascript:;" onclick="toggleImages('{{group_id}}');" class="show_all_btn{{group_id}}">Show all</a>
+	<button type="button" onclick="toggleImages('{{group_id}}');" class="link-button show_all_btn{{group_id}}" aria-expanded="false" aria-controls="sortableImages{{group_id}}">Show all images</button>
 	{% endif %}
 </p>
 <script>

@@ -41,6 +41,8 @@ function onStart(){
     <!--</div>-->
 
     {% if records.count %}
+    {# Keeps the heading order h1 (hero) -> h2 -> h3 (card titles). #}
+    <h2 class="visually-hidden">{{'Press releases'|_}}</h2>
     <div class="row library-items">
 
 
@@ -60,7 +62,7 @@ function onStart(){
 
                     <div class="col-xs-12">
                         {% for link in record.link %}
-                        <a target="_blank" href="{{link.url}}" class="btn btn-primary no-margin">{{link.text}}</a>
+                        <a target="_blank" rel="noopener noreferrer" href="{{link.url}}" class="btn btn-primary no-margin">{{link.text}}{% partial 'components/new-tab-hint' %}</a>
                         {% endfor %}
                     </div>
                 </div>

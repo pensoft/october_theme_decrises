@@ -8,8 +8,12 @@
       cover  — the post's first featured image (or null)
 #}
 <article class="blog-card">
-    <a class="blog-card__image" href="/blog/{{ record.slug }}" aria-label="Read full post: {{ record.title|striptags }}">
-        <img src="{{ cover ? cover.path : ('blog-image.png'|media) }}" alt="Featured image for: {{ record.title|striptags }}">
+    {#
+        The cover, the title and "Read more" all point at the same post. Only
+        the title and "Read more" are exposed; the cover is decorative.
+    #}
+    <a class="blog-card__image" href="/blog/{{ record.slug }}" tabindex="-1" aria-hidden="true">
+        <img src="{{ cover ? cover.path : ('blog-image.png'|media) }}" alt="">
     </a>
     <div class="blog-card__body">
         <time class="blog-card__date" datetime="{{ record.published_at|date('Y-m-d') }}">
@@ -20,7 +24,7 @@
                 {{ record.title|length > 70 ? record.title|striptags|slice(0, 70)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.title|striptags|replace({"&nbsp;": " ", ".": ". "}) }}
             </a>
         </h3>
-        <a class="blog-read-more" href="/blog/{{ record.slug }}" aria-label="Read full post: {{ record.title|striptags }}">
+        <a class="blog-read-more" href="/blog/{{ record.slug }}" aria-label="{{ 'Read more'|_ }}: {{ record.title|striptags }}">
             {{ 'Read more'|_ }}
             <svg viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>

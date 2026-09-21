@@ -97,7 +97,7 @@ function onStart()
 ==
 {% if is_detail_page %}
 <div class="single-blog-page">
-    <main class="container single-blog" role="main">
+    <div class="container single-blog">
 
         <nav class="blog-back" aria-label="Breadcrumb">
             <a href="/{{currentLang}}/blog" aria-label="Back to blog list">
@@ -110,7 +110,7 @@ function onStart()
             </a>
         </nav>
 
-        <article class="single-blog__article" role="article" aria-labelledby="article-title">
+        <article class="single-blog__article" aria-labelledby="article-title">
             {% set cover = post.featured_images.first %}
             <div class="single-blog__media">
                 <img src="{{ cover ? cover.path : ('blog-image.png'|media) }}" alt="Featured image for: {{ post.title|striptags }}" />
@@ -123,7 +123,7 @@ function onStart()
             <h1 class="single-blog__title" id="article-title">{{post.title}}</h1>
 
             {% if post.categories|length %}
-            <div class="single-blog__authors" role="region" aria-label="Authors">
+            <div class="single-blog__authors" aria-label="Authors">
                 <span class="single-blog__label">{{'Authors'|_}}:</span>
                 {% for category in post.categories %}
                 <div class="author-item">
@@ -145,13 +145,13 @@ function onStart()
             <p>&nbsp;</p>
 
             {% if post.excerpt %}
-            <div class="single-blog__summary" role="region" aria-label="Summary">
+            <div class="single-blog__summary" aria-label="Summary">
                 <span class="single-blog__label">{{'Summary'|_}}</span>
                 {{post.excerpt|raw}}
             </div>
             {% endif %}
 
-            <div class="single-blog__content" role="region" aria-label="Article content">
+            <div class="single-blog__content" aria-label="Article content">
                 {{post.content_html|raw}}
             </div>
 
@@ -159,7 +159,7 @@ function onStart()
         </article>
 
         {% if related|length %}
-        <section class="related-posts" role="region" aria-labelledby="related-heading">
+        <section class="related-posts" aria-labelledby="related-heading">
             <h2 id="related-heading">{{'Other posts'|_}}</h2>
             <div class="row">
                 {% for record in related %}
@@ -171,13 +171,15 @@ function onStart()
         </section>
         {% endif %}
 
-    </main>
+    </div>
 </div>
 
 {% else %}
 
-<main class="container" role="main">
-    <section class="blog-list" id="blog-content" role="region" aria-label="Blog posts">
+<div class="container">
+    <section class="blog-list" id="blog-content" aria-labelledby="blog-list-heading">
+        {# Keeps the heading order h1 (hero) -> h2 -> h3 (card titles). #}
+        <h2 id="blog-list-heading" class="visually-hidden">{{'Blog posts'|_}}</h2>
         <div class="row">
             {% for record in records %}
             <div class="col-md-6 col-xs-12">
@@ -190,6 +192,6 @@ function onStart()
             {{ records.render|raw }}
         </nav>
     </section>
-</main>
+</div>
 
 {% endif %}

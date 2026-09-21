@@ -15,24 +15,15 @@ a {
     &.no-color{
       color: @green-color;
     }
-    &:focus{
-        outline: none;
-    }
+    // Focus outlines are intentionally NOT removed here - the visible focus
+    // indicator is defined in components/accessibility.less.
 }
 ol{
                 list-style-type:decimal;
                 padding-left: 20px;
             }
 
-button{
-    &:focus{
-        outline: none;
-    }
-}
-
-.btn:focus{
-    outline: none!important;
-}
+// Focus outlines on buttons are kept - see components/accessibility.less.
 
 p{
     font-weight: 300;
@@ -259,7 +250,8 @@ ul.pagination{
         justify-content: center;
     }
 
-    h1 {
+    h1,
+    .hero-title {
         &.underline {
             color: #FFF;
             font-family: Manrope;
@@ -294,7 +286,8 @@ ul.pagination{
             });
 
         }
-        h1 {
+        h1,
+        .hero-title {
             &.underline {
                 border-bottom: none;
             }
@@ -538,7 +531,8 @@ ul.pagination{
 #layout-content {
     padding-bottom: 345px;
     &:not(.home){
-        h1.underline{
+        h1.underline,
+        .hero-title.underline{
             display: none;
         }
     }
@@ -777,8 +771,20 @@ ul.pagination{
 
 
 
+// Visually hidden, but still announced by screen readers.
+// `display: none` used to be applied here, which silently removed the
+// accessible names of the icon-only tabs, social links and section headings
+// that rely on this class.
 .visually-hidden {
-    display: none;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
 }
 
 .sr-only {
@@ -854,14 +860,27 @@ ul.pagination{
         }
     }
 
-    a{
+    a,
+    .cookie-bar-close{
         cursor: pointer;
         position: absolute;
         top: 14px;
         right: 14px;
     }
 
-    button {
+    // The dismiss control is a real button now; keep it looking like the icon
+    // it replaced instead of picking up the call-to-action button styling.
+    .cookie-bar-close{
+        background: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        line-height: 0;
+        height: auto;
+        text-transform: none;
+    }
+
+    button:not(.cookie-bar-close) {
         cursor: pointer;
         border: none;
         background-color: #2387c0;

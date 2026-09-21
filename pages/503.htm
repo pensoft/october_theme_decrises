@@ -5,10 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="utf-8">
     <meta http-equiv="language" content="{{ locale }}">
+    {# A single viewport tag; the duplicate second one was overriding this. #}
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=yes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ 'pensoft.maintenance::lang.responses.view.title'|trans }} | {{ app_name }}</title>
     <link href="https://fonts.googleapis.com/css?family=Exo+2:400,700&display=swap" rel="stylesheet">
     <style>
@@ -63,14 +63,14 @@
 </head>
 <body ontouchstart="" class="layout-maintenance">
     <div class="wrapper">
-        <div class="content">
-            <div class="title">
+        <main class="content">
+            <h1 class="title">
                 {{- 'pensoft.maintenance::lang.responses.view.title'|trans -}}
-            </div>
-            <div class="message">
+            </h1>
+            <p class="message">
                 {{- 'pensoft.maintenance::lang.responses.view.message'|trans -}}
-            </div>
-        </div>
+            </p>
+        </main>
     </div>
 </body>
 </html>

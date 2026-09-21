@@ -1,5 +1,6 @@
 <form method="post" data-request="onUpdate" data-request-files data-request-flash>
     <div class="ui form">
+        <div class="form-error-summary" tabindex="-1"></div>
         <div class="fields">
             <div class="field">
                 <label for="accountName">First Name</label>
@@ -19,8 +20,10 @@
                 {% if user.avatar %}
 
                 <div id="userAvatar">
-                    <img alt="{{ user.name }} {{ user.surname }}" src="{{user.avatar.getThumb(70,70, { mode : 'crop' } )}}" style="border-radius: 50%;" width="70" height="70">
-                    <a href="javascript:;" class="upload-remove-button" data-request="onRemoveAttachmentHandler" data-request-confirm="Are you sure?" data-request-data="file_id: {{user.avatar.id}}" style="color: #9D6A6A;" alt="Delete avatar">X</a>
+                    <img alt="Current avatar for {{ user.name }} {{ user.surname }}" src="{{user.avatar.getThumb(70,70, { mode : 'crop' } )}}" style="border-radius: 50%;" width="70" height="70">
+                    {# alt is not a valid attribute on <a>; the control is a
+                       button with a real accessible name. #}
+                    <button type="button" class="link-button upload-remove-button" data-request="onRemoveAttachmentHandler" data-request-confirm="Are you sure?" data-request-data="file_id: {{user.avatar.id}}" style="color: #9D6A6A;" aria-label="Delete avatar"><span aria-hidden="true">X</span></button>
                 </div>
                 {% endif %}
                 <label for="accountAvatar">Avatar</label>
@@ -40,8 +43,8 @@
             {% if updateRequiresPassword %}
             <p>To change these details, please confirm your current password.</p>
             <div class="field">
-                <label for="accountPasswordCurrent">Current Password <small class="text-danger">* required</small></label>
-                <input name="password_current" type="password" class="" id="accountPasswordCurrent">
+                <label for="accountPasswordCurrent">Current Password <span class="field-required-marker" aria-hidden="true">*</span></label>
+                <input name="password_current" type="password" class="" id="accountPasswordCurrent" required autocomplete="current-password">
             </div>
             {% endif %}
 

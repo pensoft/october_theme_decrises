@@ -14,5 +14,8 @@ redirect_to_download_page = 1
 ==
 <h1 class="underline">Publications</h1>
     <div class="container">
+        {# The hero renders the visible H1; this keeps the order h1 -> h2 -> h3
+           for the record titles the component emits. #}
+        <h2 class="visually-hidden">{{'Publication records'|_}}</h2>
         {% component 'LibraryPage' %}
     </div>

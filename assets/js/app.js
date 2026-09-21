@@ -57,7 +57,11 @@ function animateAboutBottom(){
 $(document).ready(function () {
     // $("nav").removeClass("no-transition");
     /* MENU */
-    $('.navbar-nav').attr('id', 'menu'); // please don't remove this line
+    // please don't remove this line
+    // Scoped to the burger menu: the selector used to match every .navbar-nav
+    // on the page (the hidden collapse copy and the search list too), which
+    // produced three elements sharing id="menu".
+    $('#menuToggle .navbar-nav').first().attr('id', 'menu');
     $('<div class="calendar-top"></div>').insertBefore("#calendar");
     $('<div class="card-profile-top"></div>').insertBefore(".card.profile.card-profile");
     var divs = $(".card-profiles > div");
@@ -100,12 +104,22 @@ $(document).ready(function () {
 
 
     $('body').on('click', '.work_packages .accordion-toggle', function () {
-        if ($(this).children().find(".accordion-content").is(':visible')) {
-            $(this).children().find(".accordion-content").slideUp(300);
-            $(this).children().find(".plusminus").html('<span class="plus">Read more</span>');
+        var $content = $(this).find('.accordion-content');
+        var $trigger = $(this).find('.accordion-trigger');
+        var $label = $trigger.find('.accordion-trigger-label');
+
+        if ($content.is(':visible')) {
+            $content.slideUp(300, function () {
+                // slideUp leaves display:none; keep the boolean attribute in
+                // sync so the panel stays out of the accessibility tree.
+                $content.attr('hidden', 'hidden');
+            });
+            $label.removeClass('minus').addClass('plus').text('Read more');
+            $trigger.attr('aria-expanded', 'false');
         } else {
-            $(this).children().find(".accordion-content").slideDown(300);
-            $(this).children().find(".plusminus").html('<span class="minus">Read less</span>');
+            $content.removeAttr('hidden').hide().slideDown(300);
+            $label.removeClass('plus').addClass('minus').text('Read less');
+            $trigger.attr('aria-expanded', 'true');
         }
     });
 
@@ -477,15 +491,16 @@ function isBreakpointLarge() {
 
 function showSearchForm() {
     $('#layout-header').toggleClass('full-width');
-    $('#search').toggle();
-    $('.navbar a.search-btn').css('visibility', 'hidden');
+    $('#search').show();
+    // The trigger is a <button> now, so the selector no longer scopes to `a`.
+    $('.navbar .search-btn').css('visibility', 'hidden');
     $('#menu li').hide();
 }
 
 function hideSearchForm() {
     $('#layout-header').toggleClass('full-width');
     $('#search').hide();
-    $('.navbar a.search-btn').css('visibility', 'visible');
+    $('.navbar .search-btn').css('visibility', 'visible');
     $('#menu li').show();
 }
 

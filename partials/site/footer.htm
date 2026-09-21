@@ -21,7 +21,12 @@ theme = "dark-bottom"
 ==
 {% component 'cookieConsent' %}
 
-<footer class="container-fluid border-box dark-background" role="contentinfo" aria-label="Site footer">
+{#
+    The layout already provides <footer id="layout-footer">, so this element is
+    a plain container - two contentinfo landmarks would be reported as an
+    error by the automated scan.
+#}
+<div class="container-fluid border-box dark-background">
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-xs-12 start-md center-xs">
@@ -30,12 +35,12 @@ theme = "dark-bottom"
                         <img src="{{ 'decrises-logo-white.png'|media }}" alt="DECRISES project logo" />
                     </a>
                 </div>
-                <div class="tagline" role="text" aria-label="Project tagline">
+                <div class="tagline">
                     {{'Exploring Social Innovations and<br>Enhancing an Equitable Twin Transition'|_}}
                 </div>
 
-                <nav class="social-networks" role="navigation" aria-label="Social media links">
-                    <h3 class="visually-hidden">Follow us on social media</h3>
+                <nav class="social-networks" aria-label="{{'Social media'|_}}">
+                    <h2 class="visually-hidden">{{'Follow us on social media'|_}}</h2>
                     <div class="col-xs-12 icons">
                         {% if enable_facebook and facebook_url %}
                         <a href="{{facebook_url}}" target="_blank" rel="noopener noreferrer" class="pr p-secondary p-facebook normal" aria-label="Follow us on Facebook (opens in new window)">
@@ -72,7 +77,8 @@ theme = "dark-bottom"
             </div>
 
             <div class="col-md-8 col-xs-12 footer_menu">
-                <nav role="navigation" aria-label="Footer navigation">
+                <nav aria-label="{{'Footer navigation'|_}}">
+                    <h2 class="visually-hidden">{{'Footer navigation'|_}}</h2>
                     {% component 'footer_menu' %}
                 </nav>
             </div>
@@ -88,26 +94,26 @@ theme = "dark-bottom"
 
             <div class="col-md-8 col-xs-12 menu_and_powered start-md center-xs">
                 {% if (footer_funds_flag != null or footer_funds_text != '') %}
-                <div class="funding flex-column my-1 my-lg-0 flex-lg-row px-1 align-items-center col-sm col-xs-12" role="img" aria-label="Funding information">
+                <div class="funding flex-column my-1 my-lg-0 flex-lg-row px-1 align-items-center col-sm col-xs-12">
                     {% if footer_funds_flag %}
-                    <img class="text mr-0 mr-lg-1" src="{{ footer_funds_flag }}" alt="European Union funding logo" role="img" />
+                    <img class="text mr-0 mr-lg-1" src="{{ footer_funds_flag }}" alt="{{'Funded by the European Union'|_}}" />
                     {% endif %}
                 </div>
                 {% endif %}
 
-                <div class="funding-text" role="region" aria-label="Project disclaimer">
+                <div class="funding-text">
                     {% component 'disclaimer' %}
                 </div>
             </div>
         </div>
 
         <div class="row between-xs privacy-row">
-            <div class="privacy-link start-xs">
-                <a href="/privacy-policy" aria-label="Read our privacy policy">{{'Privacy Policy'|_}}</a>
-                &nbsp; &nbsp; &nbsp; 
-                <a href="/accessibility-policy" aria-label="Read our Accessibility policy">{{'Accessibility Policy'|_}}</a>
+            <nav class="privacy-link start-xs" aria-label="{{'Legal'|_}}">
+                <a href="/privacy-policy">{{'Privacy Policy'|_}}</a>
+                &nbsp; &nbsp; &nbsp;
+                <a href="/accessibility-policy">{{'Accessibility Policy'|_}}</a>
 
-            </div>
+            </nav>
 
             <div class="powered-by start-md start-xs">
                 <span>{{'Designed and powered by'|_}}
@@ -119,4 +125,4 @@ theme = "dark-bottom"
             </div>
         </div>
     </div>
-</footer>
+</div>

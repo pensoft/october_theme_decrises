@@ -41,7 +41,7 @@
 
         {%if record.file %}
         <div class="col-xs-12 col-md-3 end-xs end-md">
-            <a target="_blank" href="{{ partial('components/download-url', { file: record.file, name: record.title }) }}" class="btn btn-primary no-margin"><i class="pr normal p-download"></i>Download ({{(record.file.file_size / 1024 / 1024 )|round(2)}} MB)</a>
+            <a target="_blank" href="{{ partial('components/download-url', { file: record.file, name: record.title }) }}" class="btn btn-primary no-margin"><i class="pr normal p-download" aria-hidden="true"></i>Download<span class="sr-only"> {{ record.title }}</span> ({{(record.file.file_size / 1024 / 1024 )|round(2)}} MB){% partial 'components/new-tab-hint' %}</a>
         </div>
         {%endif%}
     </div>

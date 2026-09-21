@@ -39,14 +39,14 @@ function onStart(){
                         <!--                </div>-->
                         <div class="coordinator_info">
                             <div>
-                                <h3>{{profile.names}}</h3>
+                                <h2>{{profile.names}}</h2>
                                 {% if profile.position %} {{profile.position}} {% endif %}
                             </div>
 
                                 {% if profile.email %}
                                 <div>
                                     <a href="mailto:{{profile.email}}" class="btn btn-primary mail">
-                                        <i></i>{{ profile.email|replace({'@': '[at]'}) }}
+                                        <i aria-hidden="true"></i>{{ profile.email|replace({'@': '[at]'}) }}
                                     </a>
                                 </div>
                                 {% endif %}

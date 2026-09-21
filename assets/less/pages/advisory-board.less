@@ -79,6 +79,17 @@
 
 // Mirrors .read_more_container on the partners page.
 .advisory-card__biography {
+    // It is a <button> now (it opens a dialog, it does not navigate), so the
+    // UA button chrome has to be stripped back to the old link appearance.
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    display: block;
+    text-align: left;
+    cursor: pointer;
+
     color: @link-color;
     position: relative;
     max-width: fit-content;

@@ -18,9 +18,15 @@ function onStart()
         <div class="news-title">
             <h3 class="card-title"><a href="{{url}}">{{title}}</a></h3>
             {% if allow_share == 'yes' %}
-                <div class="share-btn" aria-describedby="social-tooltip">
-                    <span id="share-{{slug}}" class="pr big p-share1"></span>
-                </div>
+                {# An icon-only control needs a name and needs to be operable:
+                   aria-describedby pointed at an id that is never rendered. #}
+                <button type="button"
+                        class="share-btn"
+                        id="share-{{slug}}"
+                        aria-label="Share {{ title|striptags }}"
+                        aria-haspopup="true">
+                    <span class="pr big p-share1" aria-hidden="true"></span>
+                </button>
             {% endif %}
         </div>
         <div class="text-published">{{published_at}}</div>

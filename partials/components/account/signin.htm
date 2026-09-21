@@ -1,20 +1,32 @@
 <div class="row">
     <div class="col-xs-12">
         {{ form_ajax('onSignin') }}
+        {# Placeholders are not labels: every control gets a real <label>. #}
         <div class="ui form">
+            <div id="signin-error-summary" class="form-error-summary" tabindex="-1"></div>
             <div class="fields">
                 <div class="field email">
+                    <label for="userSigninLogin">
+                        {{ loginAttributeLabel }} <span class="field-required-marker" aria-hidden="true">*</span>
+                    </label>
                     <input
                         name="login"
                         type="text"
                         id="userSigninLogin"
+                        required
+                        autocomplete="username"
                         placeholder="Enter your {{ loginAttributeLabel|lower }}" />
                 </div>
                 <div class="field password">
+                    <label for="userSigninPassword">
+                        Password <span class="field-required-marker" aria-hidden="true">*</span>
+                    </label>
                     <input
                         name="password"
                         type="password"
                         id="userSigninPassword"
+                        required
+                        autocomplete="current-password"
                         placeholder="Enter your password" />
                 </div>
             </div>

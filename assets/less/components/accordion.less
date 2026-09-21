@@ -180,10 +180,24 @@ a.ui-button:active,
         }
     }
 
-    &:focus{
-        outline: none;
-    }
 }
+
+// The keyboard control inside .plusminus - stripped back to look exactly like
+// the span it replaced.
+.work_packages .accordion-trigger{
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+    cursor: pointer;
+}
+
 .work_packages .accordion-content{
     padding: 20px 0 0 0;
     line-height: 1.5em!important;

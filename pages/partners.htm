@@ -47,20 +47,19 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
 }
 ?>
 ==
-<section class="container tabs_container" role="region" aria-labelledby="partners-heading">
+<section class="container tabs_container" aria-labelledby="partners-heading">
     <h2 id="partners-heading" class="sr-only">Project Partners</h2>
-    <div class="tabs" role="tablist" aria-label="Partner view options">
+    <div class="tabs" role="tablist" aria-label="{{'Partner view options'|_}}">
         <a class="" href="#listView" role="tab" aria-selected="true" aria-controls="listView" id="tab-list">{{'List view'|_}}</a>
         <a class="" href="#mapView" role="tab" aria-selected="false" aria-controls="mapView" id="tab-map">{{'Show on map'|_}}</a>
     </div>
 </section>
 
 <div class="container" style="padding-top: 0;">
-    <div class="row start-md center-xs partner_items_row" id="listView" role="tabpanel" aria-labelledby="tab-list">
+    <div class="row start-md center-xs partner_items_row" id="listView" role="tabpanel" aria-labelledby="tab-list" tabindex="0">
         {% for k, partner in partners %}
-            <article class="partner-item" role="article" tabindex="0" aria-labelledby="partner-title-{{k}}">
+            <article class="partner-item" aria-labelledby="partner-title-{{k}}">
                 <img src="{{partner.cover.path}}"
-                     title="{{partner.instituion}}"
                      alt="{{partner.instituion}} logo">
                 <div class="overlay">
                     <div class="partner_title" id="partner-title-{{k}}">{{partner.instituion}}</div>
@@ -68,8 +67,8 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                         <a data-toggle="modal"
                            href="#partner{{k}}"
                            class="read_more"
-                           aria-label="Read more about {{partner.instituion}}"
-                           role="button">{{'Read more'|_}}</a>
+                           aria-label="{{'Read more'|_}}: {{partner.instituion}}"
+                           aria-haspopup="dialog">{{'Read more'|_}}</a>
                     </div>
                 </div>
             </article>
@@ -77,6 +76,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                  id="partner{{k}}"
                  tabindex="-1"
                  role="dialog"
+                 aria-modal="true"
                  aria-labelledby="modal-title-{{k}}"
                  aria-describedby="modal-content-{{k}}"
                  aria-hidden="true">
@@ -108,11 +108,11 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
 
                             <div class="col-md-7 col-xs-12 partner_detailed_info">
                                 {% if insider_members.getIM(partner.id).count > 0 %}
-                                <section role="region" aria-labelledby="members-heading-{{k}}">
+                                <section aria-labelledby="members-heading-{{k}}">
                                     <h3 id="members-heading-{{k}}">{{'Members'|_}}</h3>
                                     <div class="partners_list_content">
                                         {% for profile in insider_members.getIM(partner.id) %}
-                                        <article class="contact_info row" role="article" aria-labelledby="member-name-{{k}}-{{loop.index}}">
+                                        <article class="contact_info row" aria-labelledby="member-name-{{k}}-{{loop.index}}">
                                             <div class="col-md-3 col-xs-12 coordinator_image">
                                                 {% if profile.avatar %}
                                                 <img alt="Photo of {{ profile.names }}" src="{{profile.avatar|crop_image}}">
@@ -126,7 +126,6 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                                     {% if profile.email %}
                                                     <div class="position">
                                                         <a href="mailto:{{ profile.email }}"
-                                                           target="_blank"
                                                            aria-label="Send email to {{ profile.names }}">{{ profile.email }}</a>
                                                     </div>
                                                     {% endif %}
@@ -134,17 +133,16 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-xs-12">
-                                                    <p class="read-more"
+                                                    <button type="button" class="read-more"
                                                        onclick="expandBiography(this);"
                                                        aria-expanded="false"
                                                        aria-controls="bio-{{k}}-{{loop.index}}"
-                                                       aria-label="Read biography of {{ profile.names }}">{{'Read more'|_}}</p>
+                                                       aria-label="{{'Read biography'|_}}: {{ profile.names }}">{{'Read more'|_}}</button>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="body"
                                                      id="bio-{{k}}-{{loop.index}}"
                                                      style="display: none;"
-                                                     role="region"
                                                      aria-labelledby="member-name-{{k}}-{{loop.index}}">{{ profile.content|raw }}</div>
                                             </div>
                                         </article>
@@ -161,7 +159,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
     </div>
 
 
-    <div class="row start-md center-xs partner_items_row" id="mapView" role="tabpanel" aria-labelledby="tab-map" aria-hidden="true">
+    <div class="row start-md center-xs partner_items_row" id="mapView" role="tabpanel" aria-labelledby="tab-map" tabindex="0" aria-hidden="true">
         <span class="tooltiptext" id="tooltip" aria-live="polite">Bulgaria</span>
         {% partial 'map_partners' %}
 
@@ -170,6 +168,7 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
              id="instituion{{partner.id}}"
              tabindex="-1"
              role="dialog"
+             aria-modal="true"
              aria-labelledby="map-modal-title-{{k}}"
              aria-describedby="map-modal-content-{{k}}"
              aria-hidden="true">
@@ -201,11 +200,11 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
 
                         <div class="col-md-7 col-xs-12 partner_detailed_info">
                             {% if insider_members.getIM(partner.id).count > 0 %}
-                            <section role="region" aria-labelledby="map-members-heading-{{k}}">
+                            <section aria-labelledby="map-members-heading-{{k}}">
                                 <h3 id="map-members-heading-{{k}}">{{'Members'|_}}</h3>
                                 <div class="partners_list_content">
                                     {% for profile in insider_members.getIM(partner.id) %}
-                                    <article class="contact_info row" role="article" aria-labelledby="map-member-name-{{k}}-{{loop.index}}">
+                                    <article class="contact_info row" aria-labelledby="map-member-name-{{k}}-{{loop.index}}">
                                         <div class="col-md-3 col-xs-12 coordinator_image">
                                             {% if profile.avatar %}
                                             <img alt="Photo of {{ profile.names }}" src="{{profile.avatar|crop_image}}">
@@ -219,7 +218,6 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                                 {% if profile.email %}
                                                 <div class="position">
                                                     <a href="mailto:{{ profile.email }}"
-                                                       target="_blank"
                                                        aria-label="Send email to {{ profile.names }}">{{ profile.email }}</a>
                                                 </div>
                                                 {% endif %}
@@ -227,17 +225,16 @@ return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
                                             </div>
                                         </div>
                                         <div class="col-md-3 col-xs-12">
-                                            <p class="read-more"
+                                            <button type="button" class="read-more"
                                                onclick="expandBiography(this);"
                                                aria-expanded="false"
-                                               aria-controls="bio-{{k}}-{{loop.index}}"
-                                               aria-label="Read biography of {{ profile.names }}">{{'Read more'|_}}</p>
+                                               aria-controls="map-bio-{{k}}-{{loop.index}}"
+                                               aria-label="{{'Read biography'|_}}: {{ profile.names }}">{{'Read more'|_}}</button>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="body"
                                                  id="map-bio-{{k}}-{{loop.index}}"
                                                  style="display: none;"
-                                                 role="region"
                                                  aria-labelledby="map-member-name-{{k}}-{{loop.index}}">{{ profile.content|raw }}</div>
                                         </div>
                                     </article>

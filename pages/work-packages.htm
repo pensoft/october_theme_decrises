@@ -12,18 +12,19 @@ function onStart(){
 ?>
 ==
 {% component 'siteSearchInclude' %}
-<section class="container" id="work-packages" role="region" aria-labelledby="work-packages-heading">
+<section class="container" id="work-packages" aria-labelledby="work-packages-heading">
     <h2 id="work-packages-heading" class="sr-only">Work Packages</h2>
 
     <div class="row top-xs work_packages">
         {% for key, item in records %}
-        <div class="accordion-border key_{{key}}" role="article">
-            <div class="row middle-xs accordion-toggle"
-                 role="button"
-                 tabindex="0"
-                 aria-expanded="false"
-                 aria-controls="accordion-content-{{key}}"
-                 aria-labelledby="accordion-title-{{key}}">
+        {#
+            The whole row stays clickable for pointer users, but the keyboard
+            control is a real <button>. role="button" used to sit on the row
+            itself, which made every descendant - heading, panel and the links
+            inside it - presentational and unreachable.
+        #}
+        <div class="accordion-border key_{{key}}">
+            <div class="row middle-xs accordion-toggle">
                 <div class="col-md-2 col-xs-12 start-md center-xs">
                     <div class="green_bullet" aria-hidden="true">{{item.prefix}}</div>
                 </div>
@@ -31,14 +32,18 @@ function onStart(){
                     <h3 class="accordion_title" id="accordion-title-{{key}}">{{item.title}}</h3>
                     <div class="accordion-content"
                          id="accordion-content-{{key}}"
-                         role="region"
                          aria-labelledby="accordion-title-{{key}}"
-                         aria-hidden="true"
-                         style="display: none;">
+                         hidden>
                         {{item.body|raw}}
                     </div>
-                    <div class="plusminus" aria-hidden="true">
-                        <span class="plus">{{'Read more'|_}}</span>
+                    <div class="plusminus">
+                        <button type="button"
+                                class="accordion-trigger"
+                                aria-expanded="false"
+                                aria-controls="accordion-content-{{key}}">
+                            <span class="accordion-trigger-label plus">{{'Read more'|_}}</span>
+                            <span class="visually-hidden">{{item.title}}</span>
+                        </button>
                     </div>
                 </div>
             </div>

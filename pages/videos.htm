@@ -81,12 +81,25 @@ return Response::download($pathToFile, $fileName, $headers);
 
 
 
+            {#
+                Every embedded player needs a name, and "autoplay" is dropped
+                from the allow list so a video never starts on its own.
+            #}
             {% if record.youtube_url %}
-            <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" src="{{record.youtube_url}}" width="100%" height="auto"></iframe>
+            <iframe title="{{ record.name|striptags }}"
+                    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen=""
+                    frameborder="0"
+                    src="{{record.youtube_url}}"
+                    width="100%"
+                    height="auto"></iframe>
             {% endif %}
 
             {% if record.vimeo_url %}
-            <iframe width="100%" height="auto" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            <iframe title="{{ record.name|striptags }}"
+                    width="100%"
+                    height="auto"
+                    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
                     src="{{record.vimeo_url}}">
             </iframe>
 
@@ -97,7 +110,7 @@ return Response::download($pathToFile, $fileName, $headers);
                 <div class="button_su">
                     <!--<video controls="" width="100%" height="267"><source src="{{record.file.path}}" type="video/mp4"></video>-->
                     <span class="su_button_circle desplode-circle"></span>
-                    <a class="button_su_inner" href="{{ partial('components/download-url', { file: record.file, name: record.name }) }}" download="{{record.file.file_name}}"><span class="button_text_container"><i class="pr normal p-download"></i>Download</span></a>
+                    <a class="button_su_inner" href="{{ partial('components/download-url', { file: record.file, name: record.name }) }}" download="{{record.file.file_name}}"><span class="button_text_container"><i class="pr normal p-download" aria-hidden="true"></i>Download<span class="sr-only"> {{record.name}}</span></span></a>
                 </div>
             </div>
             {% endif %}

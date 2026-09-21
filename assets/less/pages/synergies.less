@@ -1,0 +1,230 @@
+/*
+    About -> Synergies.
+
+    One card per Pensoft.Synergies record, rendered by pages/synergies.htm.
+    Each card shows the project logo, and slides a blue panel with the
+    description and a link to the project's site up over it on hover.
+
+    The grid is a <ul>, so the cards are the list items' children and have to
+    stretch to fill them - that keeps every card in a row the same height
+    whatever the logo's aspect ratio.
+*/
+
+.synergies_projects {
+    /*
+        The section owns its background rather than the page wrapper: the hero
+        sits above it and the footer below, and both bring their own.
+    */
+    background: #F3F8FD;
+    padding: 62px 0 140px;
+
+    .breakpoint-large-down({
+        padding: 40px 0 60px;
+    });
+}
+
+.synergies-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    .breakpoint-large-down({
+        grid-template-columns: repeat(2, 1fr);
+    });
+
+    .breakpoint-small-down({
+        grid-template-columns: 1fr;
+    });
+
+    /*
+        themes/master.less has "#layout-content .container ul { padding-left:
+        40px }" for prose lists, and this grid sits inside both. That selector
+        scores (1,1,1), so the padding: 0 above never reaches it - matching the
+        id and adding a class is what it takes to win without !important.
+    */
+    #layout-content .container & {
+        padding-left: 0;
+    }
+
+    > li {
+        display: flex;
+    }
+}
+
+/*
+    The two layers are stacked in a single grid cell rather than the panel being
+    taken out of flow with position: absolute. An absolute panel contributes
+    nothing to the card's height, so the card stayed at min-height and any
+    description longer than that had to scroll. Sharing one cell makes the cell
+    size to the taller of the two, so the card grows to fit the text and the
+    255px becomes a floor instead of a ceiling.
+*/
+.synergy-card {
+    position: relative;
+    display: grid;
+    grid-template-areas: "stack";
+    /* Clips the panel to the rounded corners while it is off-card. */
+    overflow: hidden;
+    width: 100%;
+    min-height: 255px;
+    background: #FFF;
+    border-radius: 10px;
+
+    .breakpoint-large-down({
+        min-height: 180px;
+    });
+}
+
+.synergy-card__logo,
+.synergy-card__overlay {
+    grid-area: stack;
+    /* Lets long unbroken words shrink the track instead of overflowing it. */
+    min-width: 0;
+}
+
+.synergy-card__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+
+    /*
+        The card sizes itself from min-height rather than a fixed height, so the
+        logo cap is in px - a percentage max-height has no definite box to
+        resolve against here and would collapse to "none" on tall logos.
+    */
+    img {
+        width: auto;
+        max-width: 60%;
+        height: auto;
+        max-height: 64px;
+        object-fit: contain;
+    }
+}
+
+/* Shown in place of the logo when a record has no image uploaded. */
+.synergy-card__name {
+    color: @secondary-btn-color;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 120%;
+    letter-spacing: -0.54px;
+}
+
+/*
+    The panel is translated rather than grown from height: 0 the way
+    .partner-item .overlay is. Transform is what "slides up" actually looks
+    like - the text travels with the panel instead of being progressively
+    unclipped - and it animates on the compositor rather than forcing layout on
+    every frame of a four-up grid.
+*/
+.synergy-card__overlay {
+    display: flex;
+    flex-direction: column;
+    /*
+        Pins the link to the bottom when the logo is the taller layer; with a
+        long description the two simply stack.
+    */
+    justify-content: space-between;
+    padding: 24px 22px 22px;
+    background: @link-color;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+}
+
+.synergy-card:hover,
+.synergy-card:focus-within {
+    .synergy-card__overlay {
+        transform: translateY(0);
+    }
+}
+
+.synergy-card__description {
+    margin-bottom: 16px;
+    color: #FFF;
+    font-family: Geist;
+    font-size: 14px;
+    font-style: normal;
+    /*
+        84 is what the design exports; the lightest Geist face declared in
+        base/fonts/geist.less is 200, so it resolves there - same as the other
+        pages that carry this value (news, events, partners).
+    */
+    font-weight: 84;
+    line-height: 120%;
+    /* -3% of the 14px font size. */
+    letter-spacing: -0.42px;
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+
+    a {
+        color: #FFF;
+        text-decoration: underline;
+    }
+}
+
+.synergy-card__link {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 8px;
+    color: #FFF;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.51px;
+
+    svg {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    &:hover {
+        color: #FFF;
+
+        svg {
+            transform: translateX(3px);
+        }
+    }
+
+    /* The default focus ring is invisible against the blue panel. */
+    &:focus-visible {
+        outline: 2px solid #FFF;
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .synergy-card__overlay,
+    .synergy-card__link svg {
+        transition: none;
+    }
+}
+
+/*
+    Touch devices never fire :hover, which would leave the description and the
+    website link permanently clipped out of the card. Where there is no hover,
+    the panel stops being an overlay and simply stacks under the logo, so the
+    same content is reachable without a pointer.
+*/
+@media (hover: none) {
+    .synergy-card {
+        /* Two rows instead of one shared cell, so the layers sit side by side. */
+        grid-template-areas: "logo" "panel";
+    }
+
+    .synergy-card__logo {
+        grid-area: logo;
+    }
+
+    .synergy-card__overlay {
+        grid-area: panel;
+        transform: none;
+    }
+}

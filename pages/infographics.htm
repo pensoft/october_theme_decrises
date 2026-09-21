@@ -79,7 +79,7 @@ return Response::download($pathToFile, $fileName, $headers);
                 {% for record in records %}
                     <div class="col-md-4 col-xs-12 mb-4">
                         <div class="flyer-container {{record.name}}">
-                            <img src="{{record.presentation_image.path}}" title="{{record.name}}">
+                            <img src="{{record.presentation_image.path}}" alt="{{record.name}}">
                         </div>
                         <p align="center">{{record.name}}</p>
 
@@ -87,7 +87,7 @@ return Response::download($pathToFile, $fileName, $headers);
                             {% if record.file %}
                             <div class="button_su">
                                 <span class="su_button_circle desplode-circle"></span>
-                                <a href="{{ partial('components/download-url', { file: record.file, name: record.name }) }}" download="{{record.file.file_name}}" class="btn btn-slide-plain dwn-btn"><span class="button_text_container"><i class="pr normal p-download"></i>Download</span></a>
+                                <a href="{{ partial('components/download-url', { file: record.file, name: record.name }) }}" download="{{record.file.file_name}}" class="btn btn-slide-plain dwn-btn"><span class="button_text_container"><i class="pr normal p-download" aria-hidden="true"></i>Download<span class="sr-only"> {{record.name}}</span></span></a>
                             </div>
                             {% endif %}
                         </div>
